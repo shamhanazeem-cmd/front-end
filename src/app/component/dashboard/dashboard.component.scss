@@ -1,0 +1,44 @@
+img{
+    width: 100%;
+    background-size: cover;
+    height: auto;
+}
+.card-title{
+    text-align: center;
+    bottom: 0;
+    padding: 25px;
+}
+.card, .card-header, .card-body{
+    border-radius: 25px;
+    border: none;
+}
+.card-body{
+    color: rgb(0, 0, 0);
+    background-color: rgb(125, 249, 255)
+}
+.card1{
+    background-image: url(../../../assets/cards/card1.jpg);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+.card2{
+    background-image: url(../../../assets/cards/card2.jpg);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+.card3{
+    background-image: url(../../../assets/cards/card3.jpg);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+.card-header{
+    background-color: rgb(0, 71, 171);
+    color: white;
+}
+.dashboard-table{
+    background-color: rgb(255, 255, 255)
+}
