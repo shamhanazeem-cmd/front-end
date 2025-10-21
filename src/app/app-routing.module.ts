@@ -9,24 +9,27 @@ import { InstituteLoginComponent } from './component/institute-login/institute-l
 import { ForbiddenComponent } from './component/forbidden/forbidden.component';
 import { AuthGuard } from './component/auth/auth.guard';
 import { PrivilegeComponent } from './component/privilege/privilege.component';
+import { MedicalhistoryComponent } from './component/medicalhistory/medicalhistory.component';
 
 const routes: Routes = [
-  
-  {path : 'dashboard',component : DashboardComponent,canActivate:[AuthGuard], data:{roles:['admin','user']}},
 
-  {path : 'student',component : StudentComponent,canActivate:[AuthGuard], data:{roles:['admin']}},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
 
-  {path : 'course',component : CourseComponent,canActivate:[AuthGuard], data:{roles:['admin']}},
+  { path: 'student', component: StudentComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
-  {path : 'teacher',component : TeacherComponent,canActivate:[AuthGuard], data:{roles:['admin']}},
+  { path: 'medicalhistory', component: MedicalhistoryComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
-  {path : 'class',component : ClassComponent, canActivate:[AuthGuard], data:{roles:['admin']}},
+  { path: 'course', component: CourseComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
-  {path : 'login',component : InstituteLoginComponent},
+  { path: 'teacher', component: TeacherComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
-  {path : 'forbidden',component : ForbiddenComponent},
-  
-  {path : 'privilege',component : PrivilegeComponent, canActivate:[AuthGuard], data:{roles:['admin','user']}}
+  { path: 'class', component: ClassComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+  { path: 'login', component: InstituteLoginComponent },
+
+  { path: 'forbidden', component: ForbiddenComponent },
+
+  { path: 'privilege', component: PrivilegeComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } }
 ];
 
 @NgModule({
