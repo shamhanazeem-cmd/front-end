@@ -18,6 +18,7 @@ import { AuthInterceptor } from './component/auth/auth.interceptor';
 import { InstituteLoginComponent } from './component/institute-login/institute-login.component';
 import { PrivilegeComponent } from './component/privilege/privilege.component';
 import { MedicalhistoryComponent } from './component/medicalhistory/medicalhistory.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { MedicalhistoryComponent } from './component/medicalhistory/medicalhisto
     FormsModule,
     NgbModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule,
   ],
   providers: [
     AuthGuard,
