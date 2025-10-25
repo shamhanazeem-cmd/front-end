@@ -1,0 +1,175 @@
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12 fw-bold fs-3">
+               Patient Deatil
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 mb-3">
+                <div class="card text-dark mb-3 h-100">
+                    <div class="card-header bg-info fw-bold"> Patient Form</div>
+                    <div class="card-body">
+                        <form (ngSubmit)="SavePatient()">
+
+                            <div class="form-group">
+                                <label for="fullName">  Full Name <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="fullName" name="fullName"
+                                    [(ngModel)]="patientObj.fullName" required placeholder="Enter Full Name">
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="nic"> nic <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="nic" name="nic"
+                                    [(ngModel)]="patientObj.nic" required
+                                    placeholder="Enter  nic">
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="dob"> DOB <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="dob" name="dob"
+                                  [(ngModel)]="patientObj.dob" required
+                                    placeholder="Enter DOB">
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="gender"> Gender <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="gender" name="gender"
+                                    [(ngModel)]="patientObj.gender" required
+                                    placeholder="Enter gender">
+                            </div>
+
+                            
+                            <div class="form-group mt-1">
+                                <label for="address"> Address <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="address" name="address"
+                                    [(ngModel)]="patientObj.address" required
+                                    placeholder="Enter Address">
+                            </div>
+
+                                 
+                             <div class="form-group mt-1">
+                                <label for="contactNo"> Contact No <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="contactNo" name="contactNo"
+                                    [(ngModel)]="patientObj.contactNo" required
+                                    placeholder="Enter contact No">
+                            </div>
+
+                             <div class="form-group mt-1">
+                                <label for="email"> e-mail <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="email" name="email"
+                                    [(ngModel)]="patientObj.email" required
+                                    placeholder="Enter e-mail">
+                            </div>
+
+                             <div class="form-group mt-1">
+                                <label for="medicalHistory">Medical History <span>*</span></label>
+                                <!-- <ng-select> </ng-select> -->
+                                <!-- <input type="number" class="form-control mt-2" id="medicalHistory" name="medicalHistory"
+                                    [(ngModel)]="patientObj.medicalHistory" required
+                                    placeholder="Enter Medical History"> -->
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="createdBy"> created By <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="createdBy" name="createdBy"
+                                    [(ngModel)]="patientObj.createdBy" required placeholder="Enter Created By">
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="createdDate"> created Date <span>*</span></label>
+                                <input type="date" class="form-control mt-2" id="createdDate" name="createdDate"
+                                    [ngModel]="patientObj.createdDate | date:'yyyy-MM-dd'"
+                                    (ngModelChange)="patientObj.createdDate = $event" required>
+
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="modifyBy"> Modify By <span>*</span></label>
+                                <input type="text" class="form-control mt-2" id="modifyBy" name="modifyBy"
+                                    [(ngModel)]="patientObj.modifyBy" required placeholder="Enter Modify By">
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="modifyDate"> Modify Date <span>*</span></label>
+                                <input type="date" class="form-control mt-2" id="modifyDate" name="modifyDate"
+                                    [ngModel]="patientObj.modifyDate | date:'yyyy-MM-dd'" required
+                                    placeholder="Enter Modify Date">
+                            </div>
+
+
+                            <div class="form-group mt-4">
+                                <div class="text-end ms-auto">
+                                    <button class="btn btn-primary"> {{isEditPatient == false ? "submit" :
+                                        "update"}}</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12 mb-3">
+                <div class="card text-dark  mb-3 h-100">
+                    <div class="card-header bg-info fw-bold"> Patient Table</div>
+                    <div class="card-body overflow-auto">
+                        <div class="input-group my-3 ">
+                            <input type="text" class="form-control" placeholder="Serach Patient" aria-label="Search"
+                                aria-describedby="button-addon2">
+                            <button class="btn btn-info" type="button" id="button-addon2"><i
+                                    class="bi bi-search"></i></button>
+                        </div>
+                        <table class="table table-striped table-bordered table-wrapper">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Code</th>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">nic</th>
+                                    <th scope="col">DOB</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Contact No</th>
+                                    <th scope="col">e-mail</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Modify</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let PatientObj of patients">
+                                    <td>{{PatientObj.id}}</td>
+                                    <td>{{PatientObj.fullName}}</td>
+                                    <td>{{PatientObj.nic}}</td>
+                                    <td>{{PatientObj.dob}}</td>
+                                    <td>{{PatientObj.gender}}</td>
+                                    <td>{{PatientObj.address}}</td>
+                                    <td>{{PatientObj.contactNo}}</td>
+                                    <td>{{PatientObj.email}}</td>
+                                    <td>{{PatientObj.medicalHistory}}</td>
+                                    <td>{{PatientObj.modifyDate}}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-warning me-1"
+                                            (click)="GetPatientsById(PatientObj.id)"><i
+                                                class="bi bi-pencil-square"></i></button>
+                                        <button class="btn btn-danger me-1" (click)="DeleteById(PatientObj.id)"><i
+                                                class="bi bi-archive"></i></button>
+                                        <button class="btn btn-info "><i class="bi bi-file-earmark"></i></button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</main>
