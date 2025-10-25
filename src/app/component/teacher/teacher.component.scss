@@ -1,0 +1,12 @@
+/* Add any custom styles here if needed */
+.invalid-feedback {
+  display: block;
+}
+
+.ng-select.is-invalid {
+  border-color: #dc3545;
+}
+
+.ng-select.is-invalid .ng-select-container {
+  border-color: #dc3545;
+}

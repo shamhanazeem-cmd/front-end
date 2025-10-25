@@ -19,6 +19,7 @@ import { InstituteLoginComponent } from './component/institute-login/institute-l
 import { PrivilegeComponent } from './component/privilege/privilege.component';
 import { MedicalhistoryComponent } from './component/medicalhistory/medicalhistory.component';
 import { PatientComponent } from './component/patient/patient.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { PatientComponent } from './component/patient/patient.component';
     FormsModule,
     NgbModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule,
   ],
   providers: [
     AuthGuard,
