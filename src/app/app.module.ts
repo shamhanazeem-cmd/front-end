@@ -20,6 +20,7 @@ import { PrivilegeComponent } from './component/privilege/privilege.component';
 import { MedicalhistoryComponent } from './component/medicalhistory/medicalhistory.component';
 import { PatientComponent } from './component/patient/patient.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SpecializationComponent } from './component/specialization/specialization.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InstituteLoginComponent,
     PrivilegeComponent,
     MedicalhistoryComponent,
-    PatientComponent
+    PatientComponent,
+    SpecializationComponent
   ],
   imports: [
     BrowserModule,
