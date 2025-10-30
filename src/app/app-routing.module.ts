@@ -11,6 +11,7 @@ import { AuthGuard } from './component/auth/auth.guard';
 import { PrivilegeComponent } from './component/privilege/privilege.component';
 import { MedicalhistoryComponent } from './component/medicalhistory/medicalhistory.component';
 import { PatientComponent } from './component/patient/patient.component';
+import { SpecializationComponent } from './component/specialization/specialization.component';
 
 const routes: Routes = [
 
@@ -21,6 +22,8 @@ const routes: Routes = [
   { path: 'medicalhistory', component: MedicalhistoryComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'patient', component: PatientComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+   { path: 'specialization', component: SpecializationComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'course', component: CourseComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
