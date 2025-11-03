@@ -25,7 +25,7 @@ export class SpecializationService {
 
   }
 
-  getAllSpecialization(page: number = 0, size: number = 10): Observable<any> {
+  getAllSpecializations(page: number = 0, size: number = 10): Observable<any> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
@@ -36,11 +36,11 @@ export class SpecializationService {
     return this.http.get(this.baseUrl);
   }
 
-  GetSpecializationById(ID: any): Observable<any> {
+  getSpecializationById(ID: any): Observable<any> {
     return this.http.get(this.baseUrl + "/" + ID);
   }
 
-  DeleteSpecializationById(ID: any): Observable<any> {
+  deleteSpecializationById(ID: any): Observable<any> {
     return this.http.delete(this.baseUrl + "/" + ID)
   }
 

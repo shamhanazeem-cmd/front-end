@@ -3,7 +3,7 @@
 
         <div class="row">
             <div class="col-md-12 fw-bold fs-3">
-               Patient Deatil
+                Patient Deatil
             </div>
         </div>
 
@@ -12,99 +12,157 @@
                 <div class="card text-dark mb-3 h-100">
                     <div class="card-header bg-info fw-bold"> Patient Form</div>
                     <div class="card-body">
-                        <form (ngSubmit)="SavePatient()">
-
-                            <div class="form-group">
-                                <label for="fullName">  Full Name <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="fullName" name="fullName"
-                                    [(ngModel)]="patientObj.fullName" required placeholder="Enter Full Name">
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label for="nic"> nic <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="nic" name="nic"
-                                    [(ngModel)]="patientObj.nic" required
-                                    placeholder="Enter  nic">
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label for="dob"> DOB <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="dob" name="dob"
-                                  [(ngModel)]="patientObj.dob" required
-                                    placeholder="Enter DOB">
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label for="gender"> Gender <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="gender" name="gender"
-                                    [(ngModel)]="patientObj.gender" required
-                                    placeholder="Enter gender">
-                            </div>
-
-                            
-                            <div class="form-group mt-1">
-                                <label for="address"> Address <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="address" name="address"
-                                    [(ngModel)]="patientObj.address" required
-                                    placeholder="Enter Address">
-                            </div>
-
-                                 
-                             <div class="form-group mt-1">
-                                <label for="contactNo"> Contact No <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="contactNo" name="contactNo"
-                                    [(ngModel)]="patientObj.contactNo" required
-                                    placeholder="Enter contact No">
-                            </div>
-
-                             <div class="form-group mt-1">
-                                <label for="email"> e-mail <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="email" name="email"
-                                    [(ngModel)]="patientObj.email" required
-                                    placeholder="Enter e-mail">
-                            </div>
-
-                             <div class="form-group mt-1">
-                                <label for="medicalHistory">Medical History <span>*</span></label>
-                                <!-- <ng-select> </ng-select> -->
-                                <!-- <input type="number" class="form-control mt-2" id="medicalHistory" name="medicalHistory"
-                                    [(ngModel)]="patientObj.medicalHistory" required
-                                    placeholder="Enter Medical History"> -->
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label for="createdBy"> created By <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="createdBy" name="createdBy"
-                                    [(ngModel)]="patientObj.createdBy" required placeholder="Enter Created By">
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label for="createdDate"> created Date <span>*</span></label>
-                                <input type="date" class="form-control mt-2" id="createdDate" name="createdDate"
-                                    [ngModel]="patientObj.createdDate | date:'yyyy-MM-dd'"
-                                    (ngModelChange)="patientObj.createdDate = $event" required>
-
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label for="modifyBy"> Modify By <span>*</span></label>
-                                <input type="text" class="form-control mt-2" id="modifyBy" name="modifyBy"
-                                    [(ngModel)]="patientObj.modifyBy" required placeholder="Enter Modify By">
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label for="modifyDate"> Modify Date <span>*</span></label>
-                                <input type="date" class="form-control mt-2" id="modifyDate" name="modifyDate"
-                                    [ngModel]="patientObj.modifyDate | date:'yyyy-MM-dd'" required
-                                    placeholder="Enter Modify Date">
-                            </div>
-
-
-                            <div class="form-group mt-4">
-                                <div class="text-end ms-auto">
-                                    <button class="btn btn-primary"> {{isEditPatient == false ? "submit" :
-                                        "update"}}</button>
+                        <form [formGroup]="patientForm" (ngSubmit)="SavePatient()">
+                            <!-- Full Name -->
+                            <div class="form-group mt-2">
+                                <label for="fullName" class="form-label">Full Name <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control mt-2" id="fullName" formControlName="fullName"
+                                    placeholder="Enter patient full name"
+                                    [ngClass]="{ 'is-invalid': patientForm.get('fullName')?.invalid && patientForm.get('fullName')?.touched }">
+                                <div *ngIf="patientForm.get('fullName')?.touched && patientForm.get('fullName')?.errors?.['required']"
+                                    class="invalid-feedback">
+                                    Full name is required.
                                 </div>
+                            </div>
+
+
+                            <!-- NIC -->
+                            <div class="form-group mt-3">
+                                <label for="nic" class="form-label">NIC <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control mt-2" id="nic" formControlName="nic"
+                                    placeholder="Enter NIC number"
+                                    [ngClass]="{ 'is-invalid': patientForm.get('nic')?.invalid && patientForm.get('nic')?.touched }">
+                                <div *ngIf="patientForm.get('nic')?.touched && patientForm.get('nic')?.errors?.['required']"
+                                    class="invalid-feedback">
+                                    NIC is required.
+                                </div>
+                            </div>
+
+
+                            <!-- Date of Birth -->
+                            <div class="form-group mt-3">
+                                <label for="dob" class="form-label">Date of Birth <span
+                                        class="text-danger">*</span></label>
+                                <input type="date" class="form-control mt-2" id="dob" formControlName="dob"
+                                    [ngClass]="{ 'is-invalid': patientForm.get('dob')?.invalid && patientForm.get('dob')?.touched }">
+                                <div *ngIf="patientForm.get('dob')?.touched && patientForm.get('dob')?.errors?.['required']"
+                                    class="invalid-feedback">
+                                    Date of birth is required.
+                                </div>
+                            </div>
+
+
+                            <!-- Gender -->
+                            <div class="form-group mt-3">
+                                <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                                <select class="form-select mt-2" id="gender" formControlName="gender"
+                                    [ngClass]="{ 'is-invalid': patientForm.get('gender')?.invalid && patientForm.get('gender')?.touched }">
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div *ngIf="patientForm.get('gender')?.touched && patientForm.get('gender')?.errors?.['required']"
+                                    class="invalid-feedback">
+                                    Gender is required.
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group mt-3">
+                                <label for="address" class="form-label">Address <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control mt-2" id="address" rows="2" formControlName="address"
+                                    placeholder="Enter address"
+                                    [ngClass]="{ 'is-invalid': patientForm.get('address')?.invalid && patientForm.get('address')?.touched }"></textarea>
+                                <div *ngIf="patientForm.get('address')?.touched &&patientForm.get('address')?.errors?.['required']"
+                                    class="invalid-feedback">
+                                    Address is required.
+                                </div>
+                            </div>
+
+
+                            <!-- Contact Number -->
+                            <div class="form-group mt-3">
+                                <label for="contactNo" class="form-label">Contact Number <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control mt-2" id="contactNo" formControlName="contactNo"
+                                    placeholder="Enter contact number"
+                                    [ngClass]="{ 'is-invalid':  patientForm.get('contactNo')?.invalid && patientForm.get('contactNo')?.touched }">
+                                <div *ngIf="patientForm.get('contactNo')?.touched && patientForm.get('contactNo')?.errors?.['required']"
+                                    class="invalid-feedback">
+                                    Contact number is required.
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group mt-3">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control mt-2" id="email" formControlName="email"
+                                    placeholder="Enter email address"
+                                    [ngClass]="{ 'is-invalid': patientForm.get('email')?.invalid && patientForm.get('email')?.touched }">
+                                <div *ngIf="patientForm.get('email')?.touched && patientForm.get('email')?.errors?.['required']"
+                                    class="invalid-feedback">
+                                    Email is required.
+                                </div>
+                            </div>
+
+                            <!--Medical History -->>
+                            <div class="form-group mt-3">
+                                <label for="medicalHistory" class="form-label">
+                                    Medical History <span class="text-danger">*</span>
+                                </label>
+
+                                <ng-select id="medicalHistory" formControlName="medicalHistory"
+                                    [items]="allMedicalHistories" bindLabel="allergies" bindValue="id"
+                                    placeholder="Select Medical History" [clearable]="false" [ngClass]="{ 'is-invalid': patientForm.get('medicalHistory')?.invalid && 
+                                      patientForm.get('medicalHistory')?.touched}">
+                                </ng-select>
+
+                                <div *ngIf=" patientForm.get('medicalHistory')?.touched && 
+                                  patientForm.get('medicalHistory')?.errors?.['required']" class="invalid-feedback">
+                                    Medical history is required
+                                </div>
+                            </div>
+
+                            <!-- Created By -->
+                            <div class="form-group mt-3">
+                                <label for="createdBy" class="form-label">Created By</label>
+                                <input type="text" class="form-control mt-2" id="createdBy" formControlName="createdBy"
+                                    placeholder="Enter creator name">
+                            </div>
+
+                            <!-- Created Date -->
+                            <div class="form-group mt-3">
+                                <label for="createdDate" class="form-label">Created Date</label>
+                                <input type="date" class="form-control mt-2" id="createdDate"
+                                    formControlName="createdDate">
+                            </div>
+
+                            <!-- Modify By -->
+                            <div class="form-group mt-3">
+                                <label for="modifyBy" class="form-label">Modified By</label>
+                                <input type="text" class="form-control mt-2" id="modifyBy" formControlName="modifyBy"
+                                    placeholder="Enter modifier name">
+                            </div>
+
+                            <!-- Modify Date -->
+                            <div class="form-group mt-3">
+                                <label for="modifyDate" class="form-label">Modified Date</label>
+                                <input type="date" class="form-control mt-2" id="modifyDate"
+                                    formControlName="modifyDate">
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="form-group mt-4 text-end">
+                                <button type="submit" class="btn btn-primary me-2" [disabled]="patientForm.invalid">
+                                    {{ isEditPatient ? 'Update' : 'Submit' }}
+                                </button>
+                                <button type="button" class="btn btn-secondary" (click)="resetForm()"
+                                    *ngIf="isEditPatient">
+                                    Cancel
+                                </button>
                             </div>
 
                         </form>
@@ -113,19 +171,32 @@
             </div>
         </div>
 
+
+        <!--Table-->>
         <div class="row">
 
             <div class="col-lg-12 mb-3">
                 <div class="card text-dark  mb-3 h-100">
                     <div class="card-header bg-info fw-bold"> Patient Table</div>
                     <div class="card-body overflow-auto">
-                        <div class="input-group my-3 ">
-                            <input type="text" class="form-control" placeholder="Serach Patient" aria-label="Search"
-                                aria-describedby="button-addon2">
-                            <button class="btn btn-info" type="button" id="button-addon2"><i
-                                    class="bi bi-search"></i></button>
+
+                        <!-- Search -->
+                        <div class="input-group my-3">
+                            <input type="text" class="form-control" placeholder="Search patient" aria-label="Search">
+                            <button class="btn btn-info" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
                         </div>
-                        <table class="table table-striped table-bordered table-wrapper">
+
+                        <!-- Loading Spinner -->
+                        <div *ngIf="isLoadingPatients" class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-striped table-bordered table-wrapper" *ngIf="!isLoadingPatients">
                             <thead>
                                 <tr>
                                     <th scope="col">Patient Code</th>
@@ -136,8 +207,10 @@
                                     <th scope="col">Address</th>
                                     <th scope="col">Contact No</th>
                                     <th scope="col">e-mail</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Modify</th>
+                                    <th scope="col">Created Date</th>
+                                    <th scope="col">Modified By</th>
+                                    <th scope="col">Modified Date</th>
+                                    <th scope="col">ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -151,10 +224,12 @@
                                     <td>{{PatientObj.contactNo}}</td>
                                     <td>{{PatientObj.email}}</td>
                                     <td>{{PatientObj.medicalHistory}}</td>
-                                    <td>{{PatientObj.modifyDate}}</td>
+                                    <td>{{ mh.createdBy }}</td>
+                                    <td>{{ PatientObj.createdDate | date: 'yyyy-MM-dd' }}</td>
+                                    <td>{{ PatientObj.modifyBy }}</td>
+                                    <td>{{ PatientObj.modifyDate | date: 'yyyy-MM-dd' }}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-warning me-1"
-                                            (click)="GetPatientsById(PatientObj.id)"><i
+                                        <button class="btn btn-warning me-1" (click)="GetPatientsById(PatientObj.id)"><i
                                                 class="bi bi-pencil-square"></i></button>
                                         <button class="btn btn-danger me-1" (click)="DeleteById(PatientObj.id)"><i
                                                 class="bi bi-archive"></i></button>
@@ -164,6 +239,33 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <!-- No Data Message -->
+                        <div *ngIf="patients.length === 0 && !isLoadingPatients" class="text-center text-muted py-4">
+                            No patients found.
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="patients.length > 0">
+                            <nav>
+                                <ul class="pagination mb-0">
+                                    <li class="page-item" [class.disabled]="!hasPrevious">
+                                        <a class="page-link" href="javascript:void(0)"
+                                            (click)="previousPage()">Previous</a>
+                                    </li>
+
+                                    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                                        [class.active]="i === currentPage">
+                                        <a class="page-link" href="javascript:void(0)" (click)="goToPage(i)">{{ i + 1
+                                            }}</a>
+                                    </li>
+
+                                    <li class="page-item" [class.disabled]="!hasNext">
+                                        <a class="page-link" href="javascript:void(0)" (click)="nextPage()">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>

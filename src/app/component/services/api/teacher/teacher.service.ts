@@ -32,6 +32,8 @@ export class TeacherService {
 
     return this.http.get<any>(this.baseUrl, { params });
   }
+
+  
   GetAllTeachers(): Observable<any> {
     return this.http.get(this.baseUrl);
   }
