@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,18 +19,27 @@ export class PatientService {
       }else{
         return this.http.put(this.baseUrl+"/"+patient.id,patient);
     }
-        
   }
+
+  
+  getAllPatients(page: number = 0, size: number = 10): Observable<any> {
+      let params = new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString());
+  
+      return this.http.get<any>(this.baseUrl, { params });
+    }
+
 
   GetAllPatient():Observable<any>{
     return this.http.get(this.baseUrl);
   }
 
-  GetPatientsById(ID:any):Observable<any>{
+  getPatientsById(ID:any):Observable<any>{
     return this.http.get(this.baseUrl+"/"+ID);
   }
 
-  DeletePatientById(ID:any):Observable<any>{
+  deletePatientById(ID:any):Observable<any>{
     return this.http.delete(this.baseUrl+"/"+ID)
   }
 

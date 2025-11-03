@@ -17,7 +17,7 @@ import { AuthGuard } from './component/auth/auth.guard';
 import { AuthInterceptor } from './component/auth/auth.interceptor';
 import { InstituteLoginComponent } from './component/institute-login/institute-login.component';
 import { PrivilegeComponent } from './component/privilege/privilege.component';
-import { MedicalhistoryComponent } from './component/medicalhistory/medicalhistory.component';
+import { MedicalHistoryComponent } from './component/medicalhistory/medicalhistory.component';
 import { PatientComponent } from './component/patient/patient.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SpecializationComponent } from './component/specialization/specialization.component';
@@ -34,7 +34,7 @@ import { SpecializationComponent } from './component/specialization/specializati
     ForbiddenComponent,
     InstituteLoginComponent,
     PrivilegeComponent,
-    MedicalhistoryComponent,
+    MedicalHistoryComponent,
     PatientComponent,
     SpecializationComponent
   ],

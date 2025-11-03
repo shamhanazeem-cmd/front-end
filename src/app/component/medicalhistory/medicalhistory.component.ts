@@ -1,128 +1,221 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MedicalHistoryService } from '../services/api/medicalhistory/medicalhistory.service';
 import { StatusService } from '../services/api/status/status.service';
-import { FormBuilder } from '@angular/forms';
-import swal from 'sweetalert';
-import { MedicalhistoyService } from '../services/api/medicalhistory/medicalhistoy.service';
-import { MedicalHistoryRepresentation } from '../services/api/module/medicalhistory-representations';
 
 @Component({
   selector: 'app-medicalhistory',
   templateUrl: './medicalhistory.component.html',
   styleUrls: ['./medicalhistory.component.scss']
 })
-export class MedicalhistoryComponent {
+export class MedicalHistoryComponent implements OnInit {
+  medicalHistoryForm!: FormGroup;
+  medicalHistories: any[] = [];
+  isEdit: boolean = false;
+  editingMedicalHistoryId: number | null = null;
+  isLoadingMedicalHistory: boolean = false;
+  allStatuses: any[] = [];
 
-  medicalHistoryObj: MedicalHistoryRepresentation = {};
-  MedicalHistories: Array<any> = [];
-  allStatus: any;
-
-  type: string;
-  statusValue: any;
-  isEditMedicalHistory: boolean = false;
-  dtDynamicVerticalScrollExample: any;
+  // Pagination properties
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalPages: number = 0;
+  totalElements: number = 0;
+  hasNext: boolean = false;
+  hasPrevious: boolean = false;
 
   constructor(
-    private medicalHistoryService: MedicalhistoyService,
-    private statusService: StatusService,
-    public fb: FormBuilder
+    private formBuilder: FormBuilder,
+    private medicalHistoryService: MedicalHistoryService,
+    private statusService: StatusService   // ✅ inject here
+
   ) { }
 
   ngOnInit(): void {
-    this.isEditMedicalHistory == false;
-    this.GetAllStatus();
-    this.GetAllMedicalHistory();
+    this.initFormGroup();
+    this.loadMedicalHistories();
+    this.loadStatuses();
   }
 
-  SaveMedicalHistory(): void {
-    this.type = this.isEditMedicalHistory == false ? 'Add' : 'Update';
-    if (this.type == 'Add') {
-      swal({
-        title: "Are you sure?",
-        text: "That you want to Add this details?",
-        icon: "warning",
-        dangerMode: true,
-      })
-        .then(willDelete => {
-          if (willDelete) {
-            this.medicalHistoryService.createMedicalHistory(this.medicalHistoryObj, this.type)
-              .subscribe({
-                next: (result): void => {
-                  this.GetAllMedicalHistory();
-                }
-              });
-            swal("Sucessfull!", "Medical History has been Adedd!", "success");
-          }
-        });
-    } else {
-      console.log(this.medicalHistoryObj);
-      this.medicalHistoryService.createMedicalHistory(this.medicalHistoryObj, this.type)
-        .subscribe({
-          next: (result): void => {
-            this.GetAllMedicalHistory();
-          }
-        });
-      swal("Sucessfull!", "Medical History has been updated!", "success");
+  initFormGroup() {
+    this.medicalHistoryForm = this.formBuilder.group({
+      id: [0],
+      allergies: ['', Validators.required],
+      pastSurgeries: [''],
+      chronicConditions: [''],
+      medicalHistory: [''],
+      createdBy: [''],
+      createdDate: [""],
+      modifyBy: [''],
+      modifyDate: [""],
+      status: ['ACTIVE', Validators.required]
+    });
+  }
+
+  // Convenience getter for easy access to form controls
+  get f() {
+    return this.medicalHistoryForm.controls;
+  }
+
+  loadStatuses() {
+    this.statusService.GetAllStatus().subscribe({
+      next: (response) => {
+        console.log('Statuses:', response);
+        // Adjust this line based on your backend response structure
+        this.allStatuses = response.data?.dataList || response.data || response;
+      },
+      error: (error) => {
+        console.error('Error loading statuses:', error);
+        this.allStatuses = [];
+      }
+    });
+  }
+
+
+
+  loadMedicalHistories(page: number = this.currentPage, size: number = this.pageSize) {
+    this.isLoadingMedicalHistory = true;
+    this.medicalHistoryService.getAllMedicalHistories(page, size).subscribe({
+      next: (response) => {
+        console.log('Medical Histories:', response);
+        this.medicalHistories = response.data.dataList;
+
+        this.currentPage = response.data.pageNumber;
+        this.totalPages = response.data.totalPages;
+        this.totalElements = response.data.totalElements;
+        this.hasNext = response.data.hasNext;
+        this.hasPrevious = response.data.hasPrevious;
+
+        this.isLoadingMedicalHistory = false;
+      },
+      error: (error) => {
+        console.error('Error loading medical histories:', error);
+        this.isLoadingMedicalHistory = false;
+      }
+    });
+  }
+
+  // Pagination methods
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadMedicalHistories(page, this.pageSize);
     }
   }
 
-GetMedicalHistoryById(ID: any) {
-  this.medicalHistoryService.GetMedicalHistoryById(ID).subscribe(allData => {
-    this.medicalHistoryObj = allData.data.dataList[0];
-
-    // Convert string to Date object
-    if (this.medicalHistoryObj.createdDate) {
-      this.medicalHistoryObj.createdDate = new Date(this.medicalHistoryObj.createdDate);
+  nextPage(): void {
+    if (this.hasNext) {
+      this.currentPage++;
+      this.loadMedicalHistories(this.currentPage, this.pageSize);
     }
-
-    this.isEditMedicalHistory = true;
-
-    if (allData.data.dataList[0].status) {
-      this.medicalHistoryObj.status = allData.data.dataList[0].status.id;
-    }
-
-    console.log("all Data", allData);
-  });
-}
-
-
-
-  GetAllMedicalHistory() {
-    this.medicalHistoryService.GetAllMedicalHistory().subscribe(allData => {
-      console.log(allData);
-
-      this.MedicalHistories = allData.data.dataList;
-      this.medicalHistoryObj.status = allData.data.dataList[0].status.id;
-    })
   }
 
-  DeleteById(ID: any) {
-    swal({
-      title: "Are you sure",
-      text: "That you want to Delete this Medical History?",
-      icon: "warning",
-      dangerMode: true,
-    })
-      .then(willDelete => {
-        if (willDelete) {
-          swal("Deleted!", "Order has been deleted!", "success");
-          this.medicalHistoryService.DeleteMedicalHistoryById(ID).subscribe(allData => {
-            this.GetAllMedicalHistory();
-          })
-        }
+  previousPage(): void {
+    if (this.hasPrevious) {
+      this.currentPage--;
+      this.loadMedicalHistories(this.currentPage, this.pageSize);
+    }
+  }
+
+  onPageSizeChange(event: any): void {
+    this.pageSize = +event.target.value;
+    this.currentPage = 0;
+    this.loadMedicalHistories(this.currentPage, this.pageSize);
+  }
+
+
+  // Save or update
+  saveMedicalHistory() {
+    if (this.medicalHistoryForm.invalid) {
+      this.markFormGroupTouched();
+      return;
+    }
+
+    const formData = this.medicalHistoryForm.value;
+    console.log('Form Data:', formData);
+
+    if (this.isEdit && this.editingMedicalHistoryId) {
+      this.medicalHistoryService.createMedicalHistory(this.editingMedicalHistoryId, formData).subscribe({
+        next: (response) => {
+          console.log('Medical history updated:', response);
+          this.loadMedicalHistories();
+          this.resetForm();
+        },
+        error: (error) => console.error('Error updating:', error)
       });
-
+    } else {
+      //  this.medicalHistoryService.createMedicalHistory(formData).subscribe({
+      //  next: (response) => {
+      //  console.log('Medical history created:', response);
+      //this.loadMedicalHistories(0, this.pageSize);
+      //  this.resetForm();
+      //},
+      //error: (error) => console.error('Error creating:', error)
+      //});
+    }
   }
 
-  GetAllStatus() {
-    this.statusService.GetAllStatus().subscribe(allData => {
-      this.allStatus = allData.data.dataList;
-
-    })
+  GetMedicalHistoryById(id: number) {
+    this.medicalHistoryService.GetMedicalHistoryById(id).subscribe({
+      next: (medicalHistory) => {
+        
+    // Populate form with medicalHistory data for editing
+        this.medicalHistoryForm.patchValue({
+          id: medicalHistory.data.id,
+          allergies: medicalHistory.data.allergies,
+          pastSurgeries: medicalHistory.data.pastSurgeries,
+          chronicConditions: medicalHistory.data.chronicConditions,
+          medicalHistory: medicalHistory.data.medicalHistory,
+          createdBy: medicalHistory.data.createdBy,
+          createdDate: medicalHistory.data.createdDate,
+          modifyBy: medicalHistory.data.modifyBy,
+          modifyDate: medicalHistory.data.modifyDate,
+          status: medicalHistory.data.status?.statusName || 'ACTIVE'
+        });
+        this.isEdit = true;
+        this.editingMedicalHistoryId = medicalHistory.id;
+      },
+      error: (error) => console.error('Error loading by ID:', error)
+    });
   }
 
-  onChangeStatus(E: any) {
-    this.medicalHistoryObj.status = E.target.value;
 
+
+  deleteById(id: number) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.medicalHistoryService.DeleteMedicalHistoryById(id).subscribe({
+        next: (response) => {
+          console.log('Deleted:', response);
+          this.loadMedicalHistories(this.currentPage, this.pageSize);
+        },
+        error: (error) => console.error('Error deleting:', error)
+      });
+    }
   }
+
+  resetForm() {
+    this.medicalHistoryForm.reset({
+      id: 0,
+      allergies: '',
+      pastSurgeries: '',
+      chronicConditions: '',
+      medicalHistory: '',
+      createdBy: '',
+      createdDate: new Date(),
+      modifyBy: '',
+      modifyDate: new Date(),
+      status: 'ACTIVE'
+    });
+    this.isEdit = false;
+    this.editingMedicalHistoryId = null;
+  }
+
+  private markFormGroupTouched() {
+    Object.keys(this.medicalHistoryForm.controls).forEach(key => {
+      const control = this.medicalHistoryForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
 
 }

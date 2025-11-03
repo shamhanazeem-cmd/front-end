@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MedicalhistoyService {
+export class MedicalHistoryService {
+
   private baseUrl: string = 'http://localhost:8010/api/v1/medicalhistory';
   constructor(
     private http: HttpClient
@@ -20,6 +21,15 @@ export class MedicalhistoyService {
     }
 
   }
+
+  getAllMedicalHistories(page: number = 0, size: number = 10): Observable<any> {
+      let params = new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString());
+  
+      return this.http.get<any>(this.baseUrl, { params });
+    }
+    
 
   GetAllMedicalHistory(): Observable<any> {
     return this.http.get(this.baseUrl);
