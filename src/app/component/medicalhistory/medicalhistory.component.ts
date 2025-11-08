@@ -27,8 +27,7 @@ export class MedicalHistoryComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private medicalHistoryService: MedicalHistoryService,
-    private statusService: StatusService   // ✅ inject here
-
+    private statusService: StatusService
   ) { }
 
   ngOnInit(): void {
@@ -42,13 +41,13 @@ export class MedicalHistoryComponent implements OnInit {
       id: [0],
       allergies: ['', Validators.required],
       pastSurgeries: [''],
-      chronicConditions: [''],
-      medicalHistory: [''],
+      chronicConditions: ['', Validators.required],
+      medicalHistory: ['', Validators.required],
       createdBy: [''],
-      createdDate: [""],
+      createdDate: [''],
       modifyBy: [''],
-      modifyDate: [""],
-      status: ['ACTIVE', Validators.required]
+      modifyDate: [''],
+      status: ['', Validators.required]
     });
   }
 
@@ -61,7 +60,6 @@ export class MedicalHistoryComponent implements OnInit {
     this.statusService.GetAllStatus().subscribe({
       next: (response) => {
         console.log('Statuses:', response);
-        // Adjust this line based on your backend response structure
         this.allStatuses = response.data?.dataList || response.data || response;
       },
       error: (error) => {
@@ -70,8 +68,6 @@ export class MedicalHistoryComponent implements OnInit {
       }
     });
   }
-
-
 
   loadMedicalHistories(page: number = this.currentPage, size: number = this.pageSize) {
     this.isLoadingMedicalHistory = true;
@@ -123,18 +119,15 @@ export class MedicalHistoryComponent implements OnInit {
     this.loadMedicalHistories(this.currentPage, this.pageSize);
   }
 
-
   // Save or update
   saveMedicalHistory() {
     if (this.medicalHistoryForm.invalid) {
       this.markFormGroupTouched();
       return;
     }
-
     const formData = this.medicalHistoryForm.value;
-    console.log('Form Data:', formData);
 
-    if (this.isEdit && this.editingMedicalHistoryId) {
+    if (this.editingMedicalHistoryId) {
       this.medicalHistoryService.createMedicalHistory(this.editingMedicalHistoryId, formData).subscribe({
         next: (response) => {
           console.log('Medical history updated:', response);
@@ -143,23 +136,14 @@ export class MedicalHistoryComponent implements OnInit {
         },
         error: (error) => console.error('Error updating:', error)
       });
-    } else {
-      //  this.medicalHistoryService.createMedicalHistory(formData).subscribe({
-      //  next: (response) => {
-      //  console.log('Medical history created:', response);
-      //this.loadMedicalHistories(0, this.pageSize);
-      //  this.resetForm();
-      //},
-      //error: (error) => console.error('Error creating:', error)
-      //});
-    }
+    } 
+    
   }
 
   GetMedicalHistoryById(id: number) {
     this.medicalHistoryService.GetMedicalHistoryById(id).subscribe({
       next: (medicalHistory) => {
-        
-    // Populate form with medicalHistory data for editing
+        // Populate form with medicalHistory data for editing
         this.medicalHistoryForm.patchValue({
           id: medicalHistory.data.id,
           allergies: medicalHistory.data.allergies,
@@ -170,16 +154,14 @@ export class MedicalHistoryComponent implements OnInit {
           createdDate: medicalHistory.data.createdDate,
           modifyBy: medicalHistory.data.modifyBy,
           modifyDate: medicalHistory.data.modifyDate,
-          status: medicalHistory.data.status?.statusName || 'ACTIVE'
+          status: medicalHistory.data.status?.id || medicalHistory.data.status
         });
         this.isEdit = true;
-        this.editingMedicalHistoryId = medicalHistory.id;
+        this.editingMedicalHistoryId = medicalHistory.data.id;
       },
       error: (error) => console.error('Error loading by ID:', error)
     });
   }
-
-
 
   deleteById(id: number) {
     if (confirm('Are you sure you want to delete this record?')) {
@@ -201,10 +183,10 @@ export class MedicalHistoryComponent implements OnInit {
       chronicConditions: '',
       medicalHistory: '',
       createdBy: '',
-      createdDate: new Date(),
+      createdDate: '',
       modifyBy: '',
-      modifyDate: new Date(),
-      status: 'ACTIVE'
+      modifyDate: '',
+      status: ''
     });
     this.isEdit = false;
     this.editingMedicalHistoryId = null;
@@ -216,6 +198,4 @@ export class MedicalHistoryComponent implements OnInit {
       control?.markAsTouched();
     });
   }
-
-
 }
