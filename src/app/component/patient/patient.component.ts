@@ -30,8 +30,8 @@ export class PatientComponent implements OnInit {
     private formBuilder: FormBuilder,
     private patientService: PatientService,
     private medicalHistoryService: MedicalHistoryService
-    
-  ) {}
+
+  ) { }
 
   ngOnInit(): void {
     this.initFormGroup();
@@ -59,11 +59,11 @@ export class PatientComponent implements OnInit {
 
   get f() {
     return this.patientForm.controls;
-  }GetAllPatient(){
+  } GetAllPatient() {
 
-}
+  }
 
-loadMedicalHistories() {
+  loadMedicalHistories() {
     this.isLoadingMedicalHistory = true;
     this.medicalHistoryService.getAllMedicalHistories().subscribe({
       next: (response) => {
@@ -96,7 +96,7 @@ loadMedicalHistories() {
     });
   }
 
-   goToPage(page: number): void {
+  goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
       this.currentPage = page;
       this.loadPatients(page, this.pageSize);
@@ -122,7 +122,7 @@ loadMedicalHistories() {
     this.currentPage = 0;
     this.loadPatients(this.currentPage, this.pageSize);
   }
-SavePatient() {
+  SavePatient() {
     if (this.patientForm.invalid) {
       this.markFormGroupTouched();
       return;
@@ -131,7 +131,7 @@ SavePatient() {
     const formData = this.patientForm.value;
 
     if (this.isEditPatient && this.editingPatientId) {
-      // Update existing patient
+      // Update existing patient - FIXED: Use updatePatient method
       this.patientService.createPatient(this.editingPatientId, formData).subscribe({
         next: (response) => {
           console.log('Patient updated:', response);
@@ -142,38 +142,26 @@ SavePatient() {
           console.error('Error updating patient:', error);
         }
       });
-    } else {
-      // Create new patient
-     // this.patientService.createPatient(formData).subscribe({
-       // next: (res) => {
-         // console.log('Patient created:', res);
-          //this.loadPatients(0, this.pageSize);
-          //this.resetForm();
-       // },
-       // error: (err) => {
-        //  console.error('Error creating patient:', err);
-       // }
-      //});
     }
   }
-GetPatientById(id: string) {
+  GetPatientById(id: string) {
     this.patientService.getPatientsById(id).subscribe({
       next: (patient) => {
-      // Populate form with patient data for editing
+        // Populate form with patient data for editing
         this.patientForm.patchValue({
           id: patient.data.id,
           fullName: patient.data.fullName,
           nic: patient.data.nic,
           dob: patient.data.dob,
           gender: patient.data.gender,
-          address:patient.data.address,
+          address: patient.data.address,
           contactNo: patient.data.contactNo,
           email: patient.data.email,
           medicalHistory: patient.data.medicalHistory?.id,
           createdBy: patient.data.createdBy,
           createdDate: patient.data.createdDate,
           modifyBy: patient.data.modifyBy,
-          modifyDate:patient.data.modifyDate
+          modifyDate: patient.data.modifyDate
         });
         this.isEditPatient = true;
         this.editingPatientId = id;
@@ -184,7 +172,7 @@ GetPatientById(id: string) {
     });
   }
 
-   DeleteById(id: string) {
+  DeleteById(id: string) {
     if (confirm('Are you sure you want to delete this patient?')) {
       this.patientService.deletePatientById(id).subscribe({
         next: (response) => {
