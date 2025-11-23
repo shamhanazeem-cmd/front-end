@@ -13,6 +13,7 @@ import { MedicalHistoryComponent } from './component/medicalhistory/medicalhisto
 import { PatientComponent } from './component/patient/patient.component';
 import { SpecializationComponent } from './component/specialization/specialization.component';
 import { DoctorComponent } from './component/doctor/doctor.component';
+import { ScheduleComponent } from './component/schedule/schedule.component';
 
 const routes: Routes = [
 
@@ -27,6 +28,8 @@ const routes: Routes = [
   { path: 'doctor', component: DoctorComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'specialization', component: SpecializationComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+  { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'course', component: CourseComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
