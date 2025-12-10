@@ -23,6 +23,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SpecializationComponent } from './component/specialization/specialization.component';
 import { DoctorComponent } from './component/doctor/doctor.component';
 import { ScheduleComponent } from './component/schedule/schedule.component';
+import { AppointmentComponent } from './component/appointment/appointment.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ScheduleComponent } from './component/schedule/schedule.component';
     PatientComponent,
     SpecializationComponent,
     DoctorComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    AppointmentComponent
   ],
   imports: [
     BrowserModule,
