@@ -14,10 +14,13 @@ import { PatientComponent } from './component/patient/patient.component';
 import { SpecializationComponent } from './component/specialization/specialization.component';
 import { DoctorComponent } from './component/doctor/doctor.component';
 import { ScheduleComponent } from './component/schedule/schedule.component';
+import { AppointmentComponent } from './component/appointment/appointment.component';
 
 const routes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
+
+  { path: 'appointment', component: AppointmentComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
 
   { path: 'student', component: StudentComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 

@@ -127,7 +127,7 @@ export class MedicalHistoryComponent implements OnInit {
     }
     const formData = this.medicalHistoryForm.value;
 
-    if (this.editingMedicalHistoryId) {
+    if (formData) {
       this.medicalHistoryService.createMedicalHistory(this.editingMedicalHistoryId, formData).subscribe({
         next: (response) => {
           console.log('Medical history updated:', response);
