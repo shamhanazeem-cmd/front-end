@@ -15,6 +15,7 @@ import { SpecializationComponent } from './component/specialization/specializati
 import { DoctorComponent } from './component/doctor/doctor.component';
 import { ScheduleComponent } from './component/schedule/schedule.component';
 import { AppointmentComponent } from './component/appointment/appointment.component';
+import { PrescriptionComponent } from './component/prescription/prescription.component';
 
 const routes: Routes = [
 
@@ -29,6 +30,8 @@ const routes: Routes = [
   { path: 'patient', component: PatientComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'doctor', component: DoctorComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+  { path: 'prescription', component: PrescriptionComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'specialization', component: SpecializationComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 

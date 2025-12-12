@@ -24,6 +24,7 @@ import { SpecializationComponent } from './component/specialization/specializati
 import { DoctorComponent } from './component/doctor/doctor.component';
 import { ScheduleComponent } from './component/schedule/schedule.component';
 import { AppointmentComponent } from './component/appointment/appointment.component';
+import { PrescriptionComponent } from './component/prescription/prescription.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { AppointmentComponent } from './component/appointment/appointment.compon
     SpecializationComponent,
     DoctorComponent,
     ScheduleComponent,
-    AppointmentComponent
+    AppointmentComponent,
+    PrescriptionComponent
   ],
   imports: [
     BrowserModule,
