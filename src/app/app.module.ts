@@ -25,6 +25,7 @@ import { DoctorComponent } from './component/doctor/doctor.component';
 import { ScheduleComponent } from './component/schedule/schedule.component';
 import { AppointmentComponent } from './component/appointment/appointment.component';
 import { PrescriptionComponent } from './component/prescription/prescription.component';
+import { NotificationComponent } from './component/notification/notification.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { PrescriptionComponent } from './component/prescription/prescription.com
     DoctorComponent,
     ScheduleComponent,
     AppointmentComponent,
-    PrescriptionComponent
+    PrescriptionComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
