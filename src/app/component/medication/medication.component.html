@@ -1,0 +1,269 @@
+<main class="mt-5 pt-3">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-12 fw-bold fs-3">
+        Medication Detail
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 mb-3">
+        <div class="card text-dark mb-3 h-100">
+          <div class="card-header bg-info fw-bold">Medication Form</div>
+
+          <div class="card-body">
+            <form [formGroup]="medicationForm" (ngSubmit)="saveMedication()">
+
+              <!-- Drug Name -->
+              <div class="form-group">
+                <label for="drugName" class="form-label">Drug Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control mt-2" id="drugName" formControlName="drugName"
+                  [ngClass]="{ 'is-invalid': medicationForm.get('drugName')?.invalid && medicationForm.get('drugName')?.touched }"
+                  placeholder="Enter Drug Name" />
+
+                <div *ngIf="medicationForm.get('drugName')?.touched && medicationForm.get('drugName')?.errors?.['required']"
+                  class="invalid-feedback">
+                  Drug Name is required.
+                </div>
+              </div>
+
+              <!-- Dosage -->
+              <div class="form-group mt-3">
+                <label for="dosage" class="form-label">Dosage <span class="text-danger">*</span></label>
+                <input type="text" class="form-control mt-2" id="dosage" formControlName="dosage"
+                  [ngClass]="{ 'is-invalid': medicationForm.get('dosage')?.invalid && medicationForm.get('dosage')?.touched }"
+                  placeholder="Enter Dosage" />
+
+                <div *ngIf="medicationForm.get('dosage')?.touched && medicationForm.get('dosage')?.errors?.['required']"
+                  class="invalid-feedback">
+                  Dosage is required.
+                </div>
+              </div>
+
+              <!-- Duration -->
+              <div class="form-group mt-3">
+                <label for="duration" class="form-label">Duration <span class="text-danger">*</span></label>
+                <input type="text" class="form-control mt-2" id="duration" formControlName="duration"
+                  [ngClass]="{ 'is-invalid': medicationForm.get('duration')?.invalid && medicationForm.get('duration')?.touched }"
+                  placeholder="Enter Duration " />
+
+                <div *ngIf="medicationForm.get('duration')?.touched && medicationForm.get('duration')?.errors?.['required']"
+                  class="invalid-feedback">
+                  Duration is required.
+                </div>
+              </div>
+
+              <!-- Instructions -->
+              <div class="form-group mt-3">
+                <label for="instructions" class="form-label">Instructions <span class="text-danger">*</span></label>
+                <textarea class="form-control mt-2" rows="3" id="instructions" formControlName="instructions"
+                  [ngClass]="{
+                    'is-invalid': medicationForm.get('instructions')?.invalid && medicationForm.get('instructions')?.touched
+                  }" placeholder="Enter instructions">
+                </textarea>
+
+                <div
+                  *ngIf="medicationForm.get('instructions')?.touched && medicationForm.get('instructions')?.errors?.['required']"
+                  class="invalid-feedback">
+                  Instructions are required.
+                </div>
+              </div>
+
+              <!-- Created By -->
+              <div class="form-group mt-3">
+                <label for="createdBy" class="form-label">Created By</label>
+                <input type="text" class="form-control mt-2" id="createdBy" formControlName="createdBy"
+                  placeholder="Enter creator name" />
+              </div>
+
+              <!-- Created Date -->
+              <div class="form-group mt-3">
+                <label for="createdDate" class="form-label">Created Date</label>
+                <input type="date" class="form-control mt-2" id="createdDate" formControlName="createdDate" />
+              </div>
+
+              <!-- Modified By -->
+              <div class="form-group mt-3">
+                <label for="modifyBy" class="form-label">Modified By</label>
+                <input type="text" class="form-control mt-2" id="modifyBy" formControlName="modifyBy"
+                  placeholder="Enter modifier name" />
+              </div>
+
+              <!-- Modified Date -->
+              <div class="form-group mt-3">
+                <label for="modifyDate" class="form-label">Modified Date</label>
+                <input type="date" class="form-control mt-2" id="modifyDate" formControlName="modifyDate" />
+              </div>
+
+              <!-- Status -->
+              <div class="form-group mt-3">
+                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                <ng-select id="status" formControlName="status" [items]="allStatuses" bindLabel="name"
+                  bindValue="id" placeholder="Select Status" [clearable]="false"
+                  [ngClass]="{
+                    'is-invalid': medicationForm.get('status')?.invalid && medicationForm.get('status')?.touched
+                  }">
+                </ng-select>
+
+                <div
+                  *ngIf="medicationForm.get('status')?.touched && medicationForm.get('status')?.errors?.['required']"
+                  class="invalid-feedback">
+                  Status is required.
+                </div>
+              </div>
+
+              <!-- Prescription -->
+              <div class="form-group mt-3">
+                <label for="prescription" class="form-label">Prescription <span class="text-danger">*</span></label>
+                <ng-select id="prescription" formControlName="prescription" [items]="allPrescriptions"
+                  bindLabel="prescriptionCode" bindValue="id" placeholder="Select Prescription" [clearable]="false"
+                  [ngClass]="{
+                    'is-invalid': medicationForm.get('prescription')?.invalid && medicationForm.get('prescription')?.touched
+                  }">
+                </ng-select>
+
+                <div
+                  *ngIf="medicationForm.get('prescription')?.touched && medicationForm.get('prescription')?.errors?.['required']"
+                  class="invalid-feedback">
+                  Prescription is required.
+                </div>
+              </div>
+
+              <!-- Submit Buttons -->
+              <div class="form-group mt-4 text-end">
+                <button type="submit" class="btn btn-primary me-2" [disabled]="medicationForm.invalid">
+                  {{ isEdit ? "Update" : "Submit" }}
+                </button>
+
+                <button type="button" class="btn btn-secondary" (click)="resetForm()" *ngIf="isEdit">
+                  Cancel
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medication Table -->
+    <div class="row">
+      <div class="col-lg-12 mb-3">
+        <div class="card text-dark mb-3 h-100">
+
+          <div class="card-header bg-info fw-bold d-flex justify-content-between align-items-center">
+            <span>Medication Records</span>
+
+            <!-- Page Size -->
+            <div class="d-flex align-items-center">
+              <label class="me-2 mb-0">Show:</label>
+              <select class="form-select form-select-sm" style="width: auto;" [value]="pageSize"
+                (change)="onPageSizeChange($event)">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card-body">
+
+            <!-- Search -->
+            <div class="input-group my-3">
+              <input type="text" class="form-control" placeholder="Search Medication" aria-label="Search" />
+              <button class="btn btn-info" type="button">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+
+            <!-- Loading spinner -->
+            <div *ngIf="isLoadingMedication" class="text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <table class="table table-striped table-bordered table-wrapper" *ngIf="!isLoadingMedication">
+              <thead>
+                <tr>
+                  <th scope="col">Medication ID</th>
+                  <th scope="col">Drug Name</th>
+                  <th scope="col">Dosage</th>
+                  <th scope="col">Duration</th>
+                  <th scope="col">Instructions</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Prescription</th>
+                  <th scope="col">Created By</th>
+                  <th scope="col">Created Date</th>
+                  <th scope="col">Modified By</th>
+                  <th scope="col">Modified Date</th>
+                  <th scope="col">ACTIONS</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let m of medications">
+                  <td>{{ m.id }}</td>
+                  <td>{{ m.drugName }}</td>
+                  <td>{{ m.dosage }}</td>
+                  <td>{{ m.duration }}</td>
+                  <td>{{ m.instructions }}</td>
+                  <td>{{ m.status?.name || m.status }}</td>
+                  <td>{{ m.prescription?.prescriptionCode || m.prescription }}</td>
+                  <td>{{ m.createdBy }}</td>
+                  <td>{{ m.createdDate | date : 'yyyy-MM-dd' }}</td>
+                  <td>{{ m.modifyBy }}</td>
+                  <td>{{ m.modifyDate | date : 'yyyy-MM-dd' }}</td>
+
+                  <td class="text-center">
+                    <button class="btn btn-warning me-1" (click)="getMedicationById(m.id)">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                    <button class="btn btn-danger me-1" (click)="deleteById(m.id)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- No data -->
+            <div *ngIf="medications.length === 0 && !isLoadingMedication" class="text-center text-muted py-4">
+              No medication records found.
+            </div>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-3"
+              *ngIf="!isLoadingMedication && medications.length > 0">
+              <div></div>
+              <nav>
+                <ul class="pagination mb-0">
+                  <li class="page-item" [class.disabled]="!hasPrevious">
+                    <a class="page-link" href="javascript:void(0)" (click)="previousPage()">Previous</a>
+                  </li>
+
+                  <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                    [class.active]="i === currentPage">
+                    <a class="page-link" href="javascript:void(0)" (click)="goToPage(i)">{{ i + 1 }}</a>
+                  </li>
+
+                  <li class="page-item" [class.disabled]="!hasNext">
+                    <a class="page-link" href="javascript:void(0)" (click)="nextPage()">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
