@@ -26,6 +26,7 @@ import { ScheduleComponent } from './component/schedule/schedule.component';
 import { AppointmentComponent } from './component/appointment/appointment.component';
 import { PrescriptionComponent } from './component/prescription/prescription.component';
 import { NotificationComponent } from './component/notification/notification.component';
+import { MedicationComponent } from './component/medication/medication.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { NotificationComponent } from './component/notification/notification.com
     ScheduleComponent,
     AppointmentComponent,
     PrescriptionComponent,
-    NotificationComponent
+    NotificationComponent,
+    MedicationComponent
   ],
   imports: [
     BrowserModule,
