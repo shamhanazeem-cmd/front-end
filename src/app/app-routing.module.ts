@@ -18,6 +18,7 @@ import { AppointmentComponent } from './component/appointment/appointment.compon
 import { PrescriptionComponent } from './component/prescription/prescription.component';
 import { NotificationComponent } from './component/notification/notification.component';
 import { MedicationComponent } from './component/medication/medication.component';
+import { PaymentComponent } from './component/payment/payment.component';
 
 const routes: Routes = [
 
@@ -38,6 +39,8 @@ const routes: Routes = [
   { path: 'doctor', component: DoctorComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'prescription', component: PrescriptionComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+  { path: 'payment', component: PaymentComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'specialization', component: SpecializationComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
