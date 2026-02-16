@@ -21,6 +21,7 @@ import { MedicalHistoryComponent } from './component/medicalhistory/medicalhisto
 import { PatientComponent } from './component/patient/patient.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SpecializationComponent } from './component/specialization/specialization.component';
+// import { ChartserviceComponent } from './component/services/api/chats/chartservice/chartservice.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { SpecializationComponent } from './component/specialization/specializati
     PrivilegeComponent,
     MedicalHistoryComponent,
     PatientComponent,
-    SpecializationComponent
+    SpecializationComponent,
+    // ChartserviceComponent
   ],
   imports: [
     BrowserModule,

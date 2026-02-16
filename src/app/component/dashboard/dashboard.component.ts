@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { forkJoin } from 'rxjs';
+import { ChartserviceService } from '../services/api/chats/chartservice.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,71 +9,71 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  employeeChart!: Chart;
+  customerChart!: Chart;
+    constructor(private chartService: ChartserviceService) {}
   ngOnInit(){
-    this.chartView();
+    this.loadDashboard();
     }
 
-    chartView(){
-      (async function() {
-        const data = [
-          { 
-            year: 2010,
-            count: 40 
-          },
-          { 
-            year: 2011,
-            count: 169 
-          },
-          { 
-            year: 2012,
-            count: 82
-          },{ 
-            year: 2014,
-            count: 150
-          }
-          ,{ 
-            year: 2015,
-            count: 220
-          }
-          ,{ 
-            year: 2016,
-            count: 400
-          }
-        ];
-      
-        new Chart(
-           document.getElementById('myChart1') as HTMLCanvasElement,
-          {
-            type: 'line',
-            data: {
-              labels: data.map(row => row.year),
-              datasets: [
-                {
-                  label: 'Enrollment by Year',
-                  data: data.map(row => row.count)
-                }
-              ]
+  loadDashboard() {
+
+    forkJoin({
+      employee: this.chartService.getEmployeeChart(),
+      customer: this.chartService.getCustomerChart()
+    }).subscribe({
+      next: (res) => {
+        this.createEmployeeChart(res.employee);
+        this.createCustomerChart(res.customer);
+      },
+      error: (err) => {
+        console.error('Dashboard load failed', err);
+      }
+    });
+  }
+
+  createEmployeeChart(data: any[]) {
+
+    const years = data.map(d => d.year);
+    const counts = data.map(d => d.count);
+
+    this.employeeChart = new Chart(
+      document.getElementById('myChart1') as HTMLCanvasElement,
+      {
+        type: 'line',
+        data: {
+          labels: years,
+          datasets: [
+            {
+              label: 'Employee Enrollment',
+              data: counts
             }
-          }
-        );
+          ]
+        }
+      }
+    );
+  }
 
-        new Chart(
-          document.getElementById('myChart2') as HTMLCanvasElement,
-         {
-           type: 'bar',
-           data: {
-             labels: data.map(row => row.year),
-             datasets: [
-               {
-                 label: 'Marks by Year',
-                 data: data.map(row => row.count)
-               }
-             ]
-           }
-         }
-       );
-      })();
-    }
+  createCustomerChart(data: any[]) {
+
+    const years = data.map(d => d.year);
+    const counts = data.map(d => d.count);
+
+    this.customerChart = new Chart(
+      document.getElementById('myChart2') as HTMLCanvasElement,
+      {
+        type: 'bar',
+        data: {
+          labels: years,
+          datasets: [
+            {
+              label: 'Customer Growth',
+              data: counts
+            }
+          ]
+        }
+      }
+    );
+  }
 
 }
