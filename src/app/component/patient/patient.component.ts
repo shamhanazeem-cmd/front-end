@@ -67,6 +67,8 @@ export class PatientComponent implements OnInit {
     this.isLoadingMedicalHistory = true;
     this.medicalHistoryService.getAllMedicalHistories().subscribe({
       next: (response) => {
+        console.log("Data : 2" , response);
+        
         this.allMedicalHistories = response.data?.dataList || [];
         this.isLoadingMedicalHistory = false;
       },
@@ -129,7 +131,8 @@ export class PatientComponent implements OnInit {
     }
 
     const formData = this.patientForm.value;
-
+    console.log("Data :", formData);
+    
     if (this.isEditPatient && this.editingPatientId) {
       // Update existing patient - FIXED: Use updatePatient method
       this.patientService.createPatient(this.editingPatientId, formData).subscribe({

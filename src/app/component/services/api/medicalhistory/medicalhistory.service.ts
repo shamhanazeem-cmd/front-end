@@ -14,6 +14,7 @@ export class MedicalHistoryService {
 
 
   createMedicalHistory(medicalHistory: any, type: any): Observable<any> {
+    alert('Medical History saved successfully!');
     if (type == 'Add') {
       return this.http.post(this.baseUrl, medicalHistory);
     } else {
