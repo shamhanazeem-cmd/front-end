@@ -1,0 +1,44 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class NotificationService {
+   private baseUrl: string = 'http://localhost:8010/api/v1/notification';
+
+  constructor(
+      private http: HttpClient
+  ) { }
+
+    createNotification(notification: any, type: any): Observable<any> {
+        if (type == 'Add') {
+          return this.http.post(this.baseUrl, notification);
+        } else {
+          return this.http.put(this.baseUrl + "/" + notification.id, notification);
+        }
+    
+      }
+    
+      getAllNotification(page: number = 0, size: number = 10): Observable<any> {
+          let params = new HttpParams()
+            .set('page', page.toString())
+            .set('size', size.toString());
+      
+          return this.http.get<any>(this.baseUrl, { params });
+        }
+        
+    
+      GetAllNotification(): Observable<any> {
+        return this.http.get(this.baseUrl);
+      }
+    
+      GetNotificationById(ID: any): Observable<any> {
+        return this.http.get(this.baseUrl + "/" + ID);
+      }
+    
+      DeleteNotificationById(ID: any): Observable<any> {
+        return this.http.delete(this.baseUrl + "/" + ID)
+      }
+}

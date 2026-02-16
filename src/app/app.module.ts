@@ -21,7 +21,13 @@ import { MedicalHistoryComponent } from './component/medicalhistory/medicalhisto
 import { PatientComponent } from './component/patient/patient.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SpecializationComponent } from './component/specialization/specialization.component';
-// import { ChartserviceComponent } from './component/services/api/chats/chartservice/chartservice.component';
+import { DoctorComponent } from './component/doctor/doctor.component';
+import { ScheduleComponent } from './component/schedule/schedule.component';
+import { AppointmentComponent } from './component/appointment/appointment.component';
+import { PrescriptionComponent } from './component/prescription/prescription.component';
+import { NotificationComponent } from './component/notification/notification.component';
+import { MedicationComponent } from './component/medication/medication.component';
+import { PaymentComponent } from './component/payment/payment.component';
 
 
 @NgModule({
@@ -38,7 +44,13 @@ import { SpecializationComponent } from './component/specialization/specializati
     MedicalHistoryComponent,
     PatientComponent,
     SpecializationComponent,
-    // ChartserviceComponent
+    DoctorComponent,
+    ScheduleComponent,
+    AppointmentComponent,
+    PrescriptionComponent,
+    NotificationComponent,
+    MedicationComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
