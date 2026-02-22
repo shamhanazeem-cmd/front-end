@@ -38,7 +38,6 @@ export class MedicalHistoryComponent implements OnInit {
 
   initFormGroup() {
     this.medicalHistoryForm = this.formBuilder.group({
-      id: [0],
       allergies: ['', Validators.required],
       pastSurgeries: [''],
       chronicConditions: ['', Validators.required],
@@ -125,20 +124,33 @@ export class MedicalHistoryComponent implements OnInit {
       this.markFormGroupTouched();
       return;
     }
+
     const formData = this.medicalHistoryForm.value;
 
-    if (formData) {
-      this.medicalHistoryService.createMedicalHistory(this.editingMedicalHistoryId, formData).subscribe({
-        next: (response) => {
-          console.log('Medical history updated:', response);
-          this.loadMedicalHistories();
-          this.resetForm();
-        },
-        error: (error) => console.error('Error updating:', error)
-      });
-    } 
-    
+    if (this.isEdit && this.editingMedicalHistoryId !== null) {
+
+      this.medicalHistoryService
+        .createMedicalHistory(this.editingMedicalHistoryId, formData)
+        .subscribe({
+          next: () => {
+            this.loadMedicalHistories();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.medicalHistoryService
+        .createMedicalHistory(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadMedicalHistories();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
   }
+
 
   GetMedicalHistoryById(id: number) {
     this.medicalHistoryService.GetMedicalHistoryById(id).subscribe({
