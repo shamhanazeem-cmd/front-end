@@ -41,7 +41,7 @@ export class PatientComponent implements OnInit {
 
   initFormGroup() {
     this.patientForm = this.formBuilder.group({
-      id: [0],
+      
       fullName: ['', Validators.required],
       nic: ['', [Validators.required,]],
       dob: ['', Validators.required],
@@ -133,18 +133,27 @@ export class PatientComponent implements OnInit {
     const formData = this.patientForm.value;
     console.log("Data :", formData);
     
-    if (this.isEditPatient && this.editingPatientId) {
-      // Update existing patient - FIXED: Use updatePatient method
-      this.patientService.createPatient(this.editingPatientId, formData).subscribe({
-        next: (response) => {
-          console.log('Patient updated:', response);
-          this.loadPatients();
-          this.resetForm();
-        },
-        error: (error) => {
-          console.error('Error updating patient:', error);
-        }
-      });
+    if (this.isEditPatient && this.editingPatientId !== null) {
+
+      this.patientService
+        .createPatient(this.editingPatientId, formData)
+        .subscribe({
+          next: () => {
+            this.loadPatients();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.patientService
+        .createPatient(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadPatients();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
     }
   }
   GetPatientById(id: string) {

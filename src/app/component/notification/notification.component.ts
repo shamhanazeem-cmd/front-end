@@ -146,16 +146,30 @@ export class NotificationComponent implements OnInit {
       return;
     }
 
-    const data = this.notificationForm.value;
+    const formdata = this.notificationForm.value;
 
-    this.notificationService.createNotification(this.editingNotificationId, data)
-      .subscribe({
-        next: () => {
-          this.loadNotifications();
-          this.resetForm();
-        },
-        error: (err) => console.error(err)
-      });
+    if (this.isEdit && this.editingNotificationId !== null) {
+
+      this.notificationService
+        .createNotification(this.editingNotificationId, formdata)
+        .subscribe({
+          next: () => {
+            this.loadNotifications();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.notificationService
+        .createNotification(formdata, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadNotifications();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
   }
 
     getNotificationById(id: number) {

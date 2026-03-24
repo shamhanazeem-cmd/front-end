@@ -183,17 +183,28 @@ export class PrescriptionComponent implements OnInit {
     }
     const formData = this.prescriptionForm.value;
 
-    if (formData) {
-      this.prescriptionService.createPrescription(this.editingPrescriptionId, formData).subscribe({
-        next: (response) => {
-          console.log('Prescription updated:', response);
-          this.loadPrescriptions();
-          this.resetForm();
-        },
-        error: (error) => console.error('Error updating:', error)
-      });
-    } 
-    
+    if (this.isEdit && this.editingPrescriptionId !== null) {
+
+      this.prescriptionService
+        .createPrescription(this.editingPrescriptionId, formData)
+        .subscribe({
+          next: () => {
+            this.loadPrescriptions();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.prescriptionService
+        .createPrescription(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadPrescriptions();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
   }
 
   // Load item into form for update

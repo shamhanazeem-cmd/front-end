@@ -138,15 +138,28 @@ export class ScheduleComponent  implements OnInit {
 
     const formData = this.scheduleForm.value;
 
-    if (this.editingScheduleId) {
-      this.scheduleService.createSchedule(this.editingScheduleId, formData).subscribe({
-        next: (response) => {
-          console.log('Schedule updated:', response);
-          this.loadSchedules();
-          this.resetForm();
-        },
-        error: (error) => console.error('Error updating schedule:', error)
-      });}
+    if (this.isEdit && this.editingScheduleId !== null) {
+
+      this.scheduleService
+        .createSchedule(this.editingScheduleId, formData)
+        .subscribe({
+          next: () => {
+            this.loadSchedules();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.scheduleService
+        .createSchedule(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadSchedules();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
   }
 
    // Get schedule by ID

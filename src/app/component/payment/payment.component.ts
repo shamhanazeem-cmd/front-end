@@ -147,15 +147,30 @@ export class PaymentComponent implements OnInit {
       return;
     }
 
-    const data = this.paymentForm.value;
+    const formdata = this.paymentForm.value;
 
-    this.paymentService.createPayment(this.editingPaymentId, data).subscribe({
-      next: () => {
-        this.loadPayments();
-        this.resetForm();
-      },
-      error: (err) => console.error(err)
-    });
+    if (this.isEditPayment && this.editingPaymentId !== null) {
+
+      this.paymentService
+        .createPayment(this.editingPaymentId, formdata)
+        .subscribe({
+          next: () => {
+            this.loadPayments();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.paymentService
+        .createPayment(formdata, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadPayments();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
   }
 
   getPaymentById(id: number) {
@@ -225,6 +240,8 @@ export class PaymentComponent implements OnInit {
       control.markAsTouched();
     });
   }
+
+ 
 
 
 }

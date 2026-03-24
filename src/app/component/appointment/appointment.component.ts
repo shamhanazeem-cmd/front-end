@@ -193,18 +193,29 @@ export class AppointmentComponent implements OnInit {
     }
     const formData = this.appointmentForm.value;
 
-    if (this.editingAppointmentId) {
-      this.appointmentService.createAppointment(this.editingAppointmentId, formData).subscribe({
-        next: (response) => {
-          console.log('appointment updated:', response);
-          this.loadAppointments();
-          this.resetForm();
-        },
-        error: (error) => console.error('Error updating appointment:', error)
-      });}
+    if (this.isEdit && this.editingAppointmentId !== null) {
 
-   }
-
+      this.appointmentService
+        .createAppointment(this.editingAppointmentId, formData)
+        .subscribe({
+          next: () => {
+            this.loadAppointments();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.appointmentService
+        .createAppointment(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadAppointments();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
+  }
    getAppointmentById(id: string) {
     this.appointmentService.getAppointmentById(id).subscribe({
       next: (appointment) => {

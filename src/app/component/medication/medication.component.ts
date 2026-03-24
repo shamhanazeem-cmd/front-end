@@ -143,16 +143,30 @@ export class MedicationComponent implements OnInit {
       this.markFormGroupTouched();
       return;
     }
+      const formData = this.medicationForm.value;
 
-    const formData = this.medicationForm.value;
+  if (this.isEdit && this.editingMedicationId !== null) {
 
-    this.medicationService.createMedication(this.editingMedicationId, formData).subscribe({
-      next: () => {
-        this.loadMedications();
-        this.resetForm();
-      },
-      error: (error) => console.error('Error saving medication:', error)
-    });
+      this.medicationService
+        .createMedication(this.editingMedicationId, formData)
+        .subscribe({
+          next: () => {
+            this.loadMedications();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.medicationService
+        .createMedication(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadMedications();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
   }
 
   // Load data for editing

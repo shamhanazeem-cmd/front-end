@@ -154,17 +154,29 @@ export class DoctorComponent implements OnInit {
     }
     const formData = this.doctorForm.value;
 
-    if (this.editingDoctorId) {
-      this.doctorService.createDoctor(this.editingDoctorId, formData).subscribe({
-        next: (response) => {
-          console.log('Doctor updated:', response);
-          this.loadDoctors();
-          this.resetForm();
-        },
-        error: (error) => console.error('Error updating doctor:', error)
-      });}
+   if (this.isEdit && this.editingDoctorId !== null) {
 
-   }
+      this.doctorService
+        .createDoctor(this.editingDoctorId, formData)
+        .subscribe({
+          next: () => {
+            this.loadDoctors();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }else {
+      this.doctorService
+        .createDoctor(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadDoctors();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
+  }
 
    getDoctorById(id: number) {
     this.doctorService.getDoctorById(id).subscribe({
