@@ -1,44 +1,102 @@
-img{
-    width: 100%;
-    background-size: cover;
-    height: auto;
-}
-.card-title{
-    text-align: center;
-    bottom: 0;
-    padding: 25px;
-}
-.card, .card-header, .card-body{
-    border-radius: 25px;
-    border: none;
-}
-.card-body{
-    color: rgb(0, 0, 0);
-    background-color: rgb(125, 249, 255)
-}
-.card1{
-    background-image: url(../../../assets/cards/card1.jpg);
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-}
-.card2{
-    background-image: url(../../../assets/cards/card2.jpg);
-    height: 100%;
-    width: 100%;
-    background-size: cover;
+/* Layout & Background */
+.medic-dashboard-white {
+  background-color: #f8f9fa; /* Slightly off-white background makes the white cards "pop" */
+  min-height: 100vh;
+  width: 100%;
+  padding: 60px 20px; /* Increased padding for better framing */
+  font-family: 'Inter', sans-serif;
 }
 
-.card3{
-    background-image: url(../../../assets/cards/card3.jpg);
-    height: 100%;
-    width: 100%;
-    background-size: cover;
+/* Card & Metric Styling */
+.white-card, .white-metric {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Softer border */
+  border-radius: 16px;
+  /* Soft, large-spread shadow gives a "premium" depth */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03) !important; 
+  transition: all 0.3s ease;
+  padding: 1.5rem !important; /* Forces more internal white space */
 }
-.card-header{
-    background-color: rgb(15, 108, 180);
-    color: white;
+
+.white-metric {
+  border-left: 5px solid #0085ff;
 }
-.dashboard-table{
-    background-color: rgb(255, 255, 255)
+
+.white-card:hover, .white-metric:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Table Styling - Less Compact */
+.medic-table thead th {
+  background-color: transparent;
+  border-bottom: 2px solid #f1f4f8;
+  padding: 15px 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.medic-table tbody tr td {
+  padding: 20px 10px;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+/* Timeline Feature */
+.blue-timeline {
+  border-bottom: 1px solid #0085ff; 
+  position: relative;
+  margin: 30px 0; 
+}
+
+.blue-timeline span {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%); /* Centered looks more professional */
+  background: #ffffff;
+  padding: 0 15px;
+  color: #0085ff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Medical Status Tags */
+.status-tag {
+  padding: 6px 14px; /* More padding for a "pill" look */
+  border-radius: 20px; /* Fully rounded corners look more modern */
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-tag.in-room { background: rgba(108, 92, 231, 0.12); color: #6c5ce7; }
+.status-tag.arrived { background: rgba(0, 184, 148, 0.12); color: #00b894; }
+.status-tag.pending { background: rgba(253, 121, 168, 0.12); color: #fd79a8; }
+
+/* Doctor Avatars */
+.avatar-circle {
+  width: 48px; /* Slightly larger */
+  height: 48px;
+  background: #eef2f7;
+  color: #0085ff;
+  border-radius: 12px; /* Squircle looks more "tech" than a perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border: none;
+}
+
+/* Typography & Details */
+.extra-small { 
+  font-size: 0.7rem; 
+  color: #adb5bd;
+  font-weight: 500;
+}
+
+h2 {
+  letter-spacing: -1px; /* Tighter letter spacing on large numbers looks high-end */
 }

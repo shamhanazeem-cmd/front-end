@@ -11,49 +11,49 @@ import { AppointmentService } from '../services/api/appointment/appointment.serv
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
-  
-    notificationForm!: FormGroup;
-    notifications: any[] = [];
-    isEdit: boolean = false;
-    editingNotificationId: number | null = null;
-    isLoadingNotification: boolean = false;
-    allStatuses: any[] = [];
-    allAppointments: any[] = [];
 
-  
-    // Pagination properties
-    currentPage: number = 0;
-    pageSize: number = 10;
-    totalPages: number = 0;
-    totalElements: number = 0;
-    hasNext: boolean = false;
-    hasPrevious: boolean = false;
+  notificationForm!: FormGroup;
+  notifications: any[] = [];
+  isEdit: boolean = false;
+  editingNotificationId: number | null = null;
+  isLoadingNotification: boolean = false;
+  allStatuses: any[] = [];
+  allAppointments: any[] = [];
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private notificationService: NotificationService,
-        private statusService: StatusService,
-        private appointmentService:AppointmentService
 
-      ) { }
-    
-     ngOnInit(): void {
-        this.initFormGroup();
-        this.loadNotifications();
-        this.loadStatuses();
-        this.loadAppointments();
+  // Pagination properties
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalPages: number = 0;
+  totalElements: number = 0;
+  hasNext: boolean = false;
+  hasPrevious: boolean = false;
 
-      }
+  constructor(
+    private formBuilder: FormBuilder,
+    private notificationService: NotificationService,
+    private statusService: StatusService,
+    private appointmentService: AppointmentService
 
-    initFormGroup() {
+  ) { }
+
+  ngOnInit(): void {
+    this.initFormGroup();
+    this.loadNotifications();
+    this.loadStatuses();
+    this.loadAppointments();
+
+  }
+
+  initFormGroup() {
     this.notificationForm = this.formBuilder.group({
       id: [0],
       sentDate: ['', Validators.required],
       channel: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
       appointment: ['', Validators.required],
       status: ['', Validators.required]
     });
@@ -111,7 +111,7 @@ export class NotificationComponent implements OnInit {
     });
   }
 
-  
+
   // Pagination methods
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
@@ -159,7 +159,7 @@ export class NotificationComponent implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.notificationService
         .createNotification(formdata, 'Add')
         .subscribe({
@@ -172,7 +172,7 @@ export class NotificationComponent implements OnInit {
     }
   }
 
-    getNotificationById(id: number) {
+  getNotificationById(id: number) {
     this.notificationService.GetNotificationById(id).subscribe({
       next: (res) => {
         const ntf = res.data;

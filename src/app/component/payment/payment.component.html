@@ -215,7 +215,7 @@
                                     <th>Amount</th>
                                     <th>Method</th>
                                     <th>Date</th>
-                                    <th>Appointment</th>
+                                    <th>Appointment Number</th>
                                     <th>Status</th>
                                     <th>ACTIONS</th>
                                 </tr>
@@ -223,6 +223,7 @@
 
                             <tbody>
                                 <tr *ngFor="let p of payments">
+
                                     <td>{{ p.id }}</td>
                                     <td>{{ p.paymentSerialID }}</td>
                                     <td>{{ p.hospitalCharge }}</td>
@@ -231,8 +232,8 @@
                                     <td>{{ p.amount }}</td>
                                     <td>{{ p.paymentMethod }}</td>
                                     <td>{{ p.paymentDate | date:'yyyy-MM-dd' }}</td>
-                                    <td>{{ p.appointment?.appointmentCode }}</td>
-                                    <td>{{ p.status?.statusName || p.status }}</td>
+                                    <td>{{ p.appointment?.id }}</td>
+                                    <td>{{ p.status?.name  }}</td>
 
                                     <td class="text-center">
                                         <button class="btn btn-warning me-1" (click)="getPaymentById(p.id)">

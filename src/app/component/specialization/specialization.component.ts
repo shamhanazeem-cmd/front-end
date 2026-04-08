@@ -37,10 +37,10 @@ export class SpecializationComponent implements OnInit {
       id: [0],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: ['']
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }]
     });
   }
 
@@ -82,7 +82,7 @@ export class SpecializationComponent implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.specializationService
         .createSpecialization(formData, 'Add')
         .subscribe({

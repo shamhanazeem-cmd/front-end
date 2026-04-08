@@ -56,12 +56,12 @@ export class AppointmentComponent implements OnInit {
       id: [0],
       appointmentDate: ['', Validators.required],
       appointmentTime: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
 
-      doctor: ['', Validators.required],
+      doctorAppointment: ['', Validators.required],
       patient: ['', Validators.required],
       schedule: ['', Validators.required],
       status: ['', Validators.required]
@@ -73,12 +73,12 @@ export class AppointmentComponent implements OnInit {
     return this.appointmentForm.controls;
   }
 
-   // Load doctor
+  // Load doctor
   loadDoctors() {
     this.doctorService.GetAllDoctor().subscribe({
       next: (response) => {
-        console.log("Data " , response);
-        
+        console.log("Data ", response);
+
         this.allDoctors = response.data?.dataList || response.data || response;
       },
       error: (error) => {
@@ -88,12 +88,12 @@ export class AppointmentComponent implements OnInit {
     });
   }
 
-   // Load patient
+  // Load patient
   loadPatients() {
     this.patientService.GetAllPatient().subscribe({
       next: (response) => {
-        console.log("Data " , response);
-        
+        console.log("Data ", response);
+
         this.allPatients = response.data?.dataList || response.data || response;
       },
       error: (error) => {
@@ -103,12 +103,12 @@ export class AppointmentComponent implements OnInit {
     });
   }
 
-   // Load schedule
+  // Load schedule
   loadSchedule() {
     this.scheduleService.GetAllSchedule().subscribe({
       next: (response) => {
-        console.log("Data " , response);
-        
+        console.log("Data ", response);
+
         this.allSchedules = response.data?.dataList || response.data || response;
       },
       error: (error) => {
@@ -118,12 +118,12 @@ export class AppointmentComponent implements OnInit {
     });
   }
 
-   // Load statuses
+  // Load statuses
   loadStatus() {
     this.statusService.GetAllStatus().subscribe({
       next: (response) => {
-        console.log("Data " , response);
-        
+        console.log("Data ", response);
+
         this.allStatuses = response.data?.dataList || response.data || response;
       },
       error: (error) => {
@@ -133,7 +133,7 @@ export class AppointmentComponent implements OnInit {
     });
   }
 
-   // Load appointments with pagination
+  // Load appointments with pagination
   loadAppointments(page: number = this.currentPage, size: number = this.pageSize) {
     this.isLoadingAppointments = true;
 
@@ -156,7 +156,7 @@ export class AppointmentComponent implements OnInit {
     });
   }
 
-  
+
   // Pagination controls
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
@@ -187,6 +187,7 @@ export class AppointmentComponent implements OnInit {
 
   // Save or update
   saveAppointment() {
+    console.log("FORM VALUE:", this.appointmentForm.value);
     if (this.appointmentForm.invalid) {
       this.markFormGroupTouched();
       return;
@@ -204,7 +205,7 @@ export class AppointmentComponent implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.appointmentService
         .createAppointment(formData, 'Add')
         .subscribe({
@@ -216,7 +217,7 @@ export class AppointmentComponent implements OnInit {
         });
     }
   }
-   getAppointmentById(id: string) {
+  getAppointmentById(id: string) {
     this.appointmentService.getAppointmentById(id).subscribe({
       next: (appointment) => {
         this.appointmentForm.patchValue({
@@ -228,7 +229,7 @@ export class AppointmentComponent implements OnInit {
           modifyBy: appointment.data.modifyBy,
           modifyDate: appointment.data.modifyDate,
 
-          doctor: appointment.data.doctor?.id,
+          doctorAppointment: appointment.doctor?.id || appointment.doctorAppointment?.id,
           patient: appointment.data.patient?.id,
           schedule: appointment.data.schedule?.id,
           status: appointment.data.status?.id
@@ -243,7 +244,7 @@ export class AppointmentComponent implements OnInit {
     });
   }
 
-   deleteById(id: string) {
+  deleteById(id: string) {
     if (confirm("Are you sure you want to delete this appointment?")) {
       this.appointmentService.deleteAppointmentById(id).subscribe({
         next: (response) => {
@@ -266,7 +267,7 @@ export class AppointmentComponent implements OnInit {
       createdDate: '',
       modifyBy: '',
       modifyDate: '',
-      doctor: '',
+      doctorAppointment: '',
       patient: '',
       schedule: '',
       status: ''

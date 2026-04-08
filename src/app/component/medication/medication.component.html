@@ -117,7 +117,7 @@
               <div class="form-group mt-3">
                 <label for="prescription" class="form-label">Prescription <span class="text-danger">*</span></label>
                 <ng-select id="prescription" formControlName="prescription" [items]="allPrescriptions"
-                  bindLabel="prescriptionCode" bindValue="id" placeholder="Select Prescription" [clearable]="false"
+                  bindLabel="id" bindValue="id" placeholder="Select Prescription" [clearable]="false"
                   [ngClass]="{
                     'is-invalid': medicationForm.get('prescription')?.invalid && medicationForm.get('prescription')?.touched
                   }">
@@ -195,7 +195,7 @@
                   <th scope="col">Duration</th>
                   <th scope="col">Instructions</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Prescription</th>
+                  <th scope="col">Prescription ID</th>
                   <th scope="col">Created By</th>
                   <th scope="col">Created Date</th>
                   <th scope="col">Modified By</th>
@@ -212,7 +212,7 @@
                   <td>{{ m.duration }}</td>
                   <td>{{ m.instructions }}</td>
                   <td>{{ m.status?.name || m.status }}</td>
-                  <td>{{ m.prescription?.prescriptionCode || m.prescription }}</td>
+                  <td>{{ m.prescription?.id }}</td>
                   <td>{{ m.createdBy }}</td>
                   <td>{{ m.createdDate | date : 'yyyy-MM-dd' }}</td>
                   <td>{{ m.modifyBy }}</td>

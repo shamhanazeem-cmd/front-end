@@ -9,7 +9,7 @@ import { DoctorService } from '../services/api/doctor/doctor.service';
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
-export class ScheduleComponent  implements OnInit {
+export class ScheduleComponent implements OnInit {
   scheduleForm!: FormGroup;
   schedules: any[] = [];
   isEdit: boolean = false;
@@ -18,7 +18,7 @@ export class ScheduleComponent  implements OnInit {
 
   allDoctors: any[] = [];
 
- // Pagination properties
+  // Pagination properties
   currentPage: number = 0;
   pageSize: number = 10;
   totalPages: number = 0;
@@ -29,14 +29,14 @@ export class ScheduleComponent  implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private scheduleService: ScheduleService,
-    private doctorService: DoctorService  
+    private doctorService: DoctorService
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initFormGroup();
     this.loadSchedules();
-    this.loadDoctors();   
+    this.loadDoctors();
 
   }
 
@@ -48,15 +48,15 @@ export class ScheduleComponent  implements OnInit {
       endTime: ['', Validators.required],
       slotDuration: ['', Validators.required],
       maxPatients: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
       doctor: ['', Validators.required]
     });
   }
 
-  
+
   get f() {
     return this.scheduleForm.controls;
   }
@@ -64,8 +64,8 @@ export class ScheduleComponent  implements OnInit {
   // Load doctors 
   loadDoctors() {
     this.doctorService.getAllDoctors().subscribe({
-       next: (response) => {
-      console.log("Data " , response);
+      next: (response) => {
+        console.log("Data ", response);
 
         this.allDoctors = response.data?.dataList || response.data || response;
       },
@@ -77,7 +77,7 @@ export class ScheduleComponent  implements OnInit {
   }
 
 
-    // Load schedules
+  // Load schedules
   loadSchedules(page: number = this.currentPage, size: number = this.pageSize) {
     this.isLoadingSchedules = true;
 
@@ -100,7 +100,7 @@ export class ScheduleComponent  implements OnInit {
     });
   }
 
-  
+
   // Pagination controls
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
@@ -149,7 +149,7 @@ export class ScheduleComponent  implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.scheduleService
         .createSchedule(formData, 'Add')
         .subscribe({
@@ -162,7 +162,7 @@ export class ScheduleComponent  implements OnInit {
     }
   }
 
-   // Get schedule by ID
+  // Get schedule by ID
   getScheduleById(id: number) {
     this.scheduleService.getScheduleById(id).subscribe({
       next: (response) => {
@@ -191,7 +191,7 @@ export class ScheduleComponent  implements OnInit {
     });
   }
 
-   deleteById(id: number) {
+  deleteById(id: number) {
     if (confirm('Are you sure you want to delete this schedule?')) {
       this.scheduleService.deleteScheduleById(id).subscribe({
         next: (response) => {
@@ -228,7 +228,7 @@ export class ScheduleComponent  implements OnInit {
       control?.markAsTouched();
     });
   }
-  
+
 
 
 

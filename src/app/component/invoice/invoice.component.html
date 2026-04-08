@@ -62,7 +62,7 @@
 
                 <ng-select formControlName="payment"
                   [items]="allPayments"
-                  bindLabel="paymentName"
+                  bindLabel="paymentSerialID"
                   bindValue="id"
                   placeholder="Select Payment"
                   [clearable]="false"
@@ -191,8 +191,8 @@
                   <td>{{i.invoiceNumber}}</td>
                   <td>{{i.issuedDate | date:'yyyy-MM-dd'}}</td>
                   <td>{{i.totalAmount}}</td>
-                  <td>{{i.payment?.paymentName}}</td>
-                  <td>{{i.status?.statusName}}</td>
+                  <td>{{i.payment?.paymentSerialID}}</td>
+                  <td>{{i.status?.name}}</td>
                   <td>{{i.createdBy}}</td>
                   <td>{{i.createdDate | date:'yyyy-MM-dd'}}</td>
                   <td>{{i.modifyBy}}</td>

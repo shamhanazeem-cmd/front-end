@@ -33,7 +33,7 @@ export class DoctorComponent implements OnInit {
     private doctorService: DoctorService,
     private statusService: StatusService,
     private specializationService: SpecializationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initFormGroup();
@@ -50,10 +50,10 @@ export class DoctorComponent implements OnInit {
       mail: ['', [Validators.required, Validators.email]],
       roomNo: ['', Validators.required],
 
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
 
       status: ['', Validators.required],
       specializations: ['', Validators.required]
@@ -68,8 +68,8 @@ export class DoctorComponent implements OnInit {
   loadStatus() {
     this.statusService.GetAllStatus().subscribe({
       next: (response) => {
-        console.log("Data " , response);
-        
+        console.log("Data ", response);
+
         this.allStatuses = response.data?.dataList || response.data || response;
       },
       error: (error) => {
@@ -85,7 +85,7 @@ export class DoctorComponent implements OnInit {
 
     this.specializationService.getAllSpecializations().subscribe({
       next: (response) => {
-         console.log("Data " , response);
+        console.log("Data ", response);
 
         this.allSpecializations = response.data?.dataList || response.data || response;
       },
@@ -96,7 +96,7 @@ export class DoctorComponent implements OnInit {
     });
   }
 
-   loadDoctors(page: number = this.currentPage, size: number = this.pageSize) {
+  loadDoctors(page: number = this.currentPage, size: number = this.pageSize) {
     this.isLoadingDoctors = true;
     this.doctorService.getAllDoctors(page, size).subscribe({
       next: (response) => {
@@ -146,7 +146,7 @@ export class DoctorComponent implements OnInit {
   }
 
 
-   // Save or update
+  // Save or update
   saveDoctor() {
     if (this.doctorForm.invalid) {
       this.markFormGroupTouched();
@@ -154,7 +154,7 @@ export class DoctorComponent implements OnInit {
     }
     const formData = this.doctorForm.value;
 
-   if (this.isEdit && this.editingDoctorId !== null) {
+    if (this.isEdit && this.editingDoctorId !== null) {
 
       this.doctorService
         .createDoctor(this.editingDoctorId, formData)
@@ -165,7 +165,7 @@ export class DoctorComponent implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.doctorService
         .createDoctor(formData, 'Add')
         .subscribe({
@@ -178,7 +178,7 @@ export class DoctorComponent implements OnInit {
     }
   }
 
-   getDoctorById(id: number) {
+  getDoctorById(id: number) {
     this.doctorService.getDoctorById(id).subscribe({
       next: (response) => {
         const doctor = response.data;
@@ -206,7 +206,7 @@ export class DoctorComponent implements OnInit {
     });
   }
 
-   deleteById(id: number) {
+  deleteById(id: number) {
     if (confirm('Are you sure you want to delete this doctor?')) {
       this.doctorService.deleteDoctorById(id).subscribe({
         next: (response) => {

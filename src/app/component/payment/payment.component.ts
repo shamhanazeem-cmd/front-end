@@ -33,7 +33,7 @@ export class PaymentComponent implements OnInit {
     private paymentService: PaymentService,
     private statusService: StatusService,
     private appointmentService: AppointmentService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initFormGroup();
@@ -48,14 +48,14 @@ export class PaymentComponent implements OnInit {
       paymentSerialID: ['', Validators.required],
       hospitalCharge: ['', Validators.required],
       doctorCharge: ['', Validators.required],
-      tax: ['',Validators.required],
+      tax: ['', Validators.required],
       amount: ['', Validators.required],
       paymentMethod: ['', Validators.required],
       paymentDate: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
       status: ['', Validators.required],
       appointment: ['', Validators.required]
     });
@@ -112,7 +112,7 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-   // Pagination methods
+  // Pagination methods
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
       this.currentPage = page;
@@ -160,7 +160,7 @@ export class PaymentComponent implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.paymentService
         .createPayment(formdata, 'Add')
         .subscribe({
@@ -241,7 +241,7 @@ export class PaymentComponent implements OnInit {
     });
   }
 
- 
+
 
 
 }

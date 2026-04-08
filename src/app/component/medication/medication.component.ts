@@ -10,7 +10,7 @@ import { PrescriptionService } from '../services/api/prescription/prescription.s
   styleUrls: ['./medication.component.scss']
 })
 export class MedicationComponent implements OnInit {
-  
+
   medicationForm!: FormGroup;
   medications: any[] = [];
   isEdit: boolean = false;
@@ -33,7 +33,7 @@ export class MedicationComponent implements OnInit {
     private medicationService: MedicationService,
     private statusService: StatusService,
     private prescriptionService: PrescriptionService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initFormGroup();
@@ -49,10 +49,10 @@ export class MedicationComponent implements OnInit {
       dosage: ['', Validators.required],
       duration: ['', Validators.required],
       instructions: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
       status: ['', Validators.required],
       prescription: ['', Validators.required]
     });
@@ -72,10 +72,10 @@ export class MedicationComponent implements OnInit {
         this.allStatuses = [];
       }
     });
-  } 
+  }
 
 
-    // Load Prescription Dropdown
+  // Load Prescription Dropdown
   loadPrescriptions() {
     this.prescriptionService.getAllPrescription().subscribe({
       next: (response) => {
@@ -108,7 +108,7 @@ export class MedicationComponent implements OnInit {
     });
   }
 
-  
+
   // Pagination controls
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
@@ -137,15 +137,15 @@ export class MedicationComponent implements OnInit {
     this.loadMedications(this.currentPage, this.pageSize);
   }
 
-   // Create or Update Medication
+  // Create or Update Medication
   saveMedication() {
     if (this.medicationForm.invalid) {
       this.markFormGroupTouched();
       return;
     }
-      const formData = this.medicationForm.value;
+    const formData = this.medicationForm.value;
 
-  if (this.isEdit && this.editingMedicationId !== null) {
+    if (this.isEdit && this.editingMedicationId !== null) {
 
       this.medicationService
         .createMedication(this.editingMedicationId, formData)
@@ -156,7 +156,7 @@ export class MedicationComponent implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.medicationService
         .createMedication(formData, 'Add')
         .subscribe({

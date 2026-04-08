@@ -1,110 +1,173 @@
-<body>
-    <main class="mt-5 pt-3">
-      <div class="container-fluid">
+<div class="medic-dashboard-white">
+  <div class="container-fluid px-5 py-4">
 
-        <div class="row">
-          <div class="col-md-12 fw-bold fs-3">
-            DASHBOARD
+    <div class="row align-items-center mb-5 dashboard-header">
+      <div class="col-md-7">
+        <h3 class="text-dark fw-bold mb-1">Dashboard</h3>
+        <p class="text-muted small mb-0">Friday, 27 March 2026 — E-Medic Channelling Centre</p>
+      </div>
+      <div class="col-md-5 text-end">
+        <button class="btn btn-outline-primary border-2 fw-bold me-2">+ Book Appointment</button>
+        <button class="btn btn-primary px-4 fw-bold"
+          style="background:#0085ff; border:none; box-shadow: 0 4px 12px rgba(0,133,255,0.3);">+ Walk-in</button>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="white-metric p-4">
+          <span class="text-muted extra-small fw-bold text-uppercase tracking-wider">Today's Appointments</span>
+          <h2 class="text-dark fw-bold my-2">48</h2>
+          <div class="small"><span class="text-success fw-bold">32 Confirmed</span> <span
+              class="text-muted mx-1">·</span> 16 Pending</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="white-metric p-4" style="border-left-color: #00f2ff;">
+          <span class="text-muted extra-small fw-bold text-uppercase">Checked In</span>
+          <h2 class="text-dark fw-bold my-2">11</h2>
+          <div class="small text-muted">Next: <span class="fw-bold text-dark">Amaya</span> — 10:15 AM</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="white-metric p-4" style="border-left-color: #6c5ce7;">
+          <span class="text-muted extra-small fw-bold text-uppercase">Doctors on Duty</span>
+          <h2 class="text-dark fw-bold my-2">4 / 6</h2>
+          <div class="small text-warning fw-bold">2 Doctors Off Today</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="white-metric p-4" style="border-left-color: #ff7675;">
+          <span class="text-muted extra-small fw-bold text-uppercase">Avg Wait Time</span>
+          <h2 class="text-dark fw-bold my-2">14 min</h2>
+          <div class="small text-muted">Across all channels</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+      <div class="col-lg-8">
+        <div class="white-card p-4 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h6 class="text-dark fw-bold mb-0">LIVE APPOINTMENT QUEUE</h6>
+            <span class="badge bg-danger rounded-pill px-3 py-2" style="font-size: 0.7rem;">LIVE</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-middle medic-table custom-table-spacing">
+              <thead>
+                <tr class="text-muted small">
+                  <th class="border-0">TIME</th>
+                  <th class="border-0">PATIENT</th>
+                  <th class="border-0">DOCTOR</th>
+                  <th class="border-0">STATUS</th>
+                  <th class="border-0 ">ACTION</th>
+                </tr>
+              </thead>
+              <tbody class="border-top-0">
+                <tr>
+                  <td class="text-muted">09:00</td>
+                  <td class="fw-bold">Kavya Perera</td>
+                  <td>Dr. Silva</td>
+                  <td><span class="status-tag in-room">In Room</span></td>
+                  <td class="text-end"></td>
+                </tr>
+                <tr>
+                  <td>09:30</td>
+                  <td class="fw-bold">Nuwan De Silva</td>
+                  <td>Dr. Fernando</td>
+                  <td><span class="status-tag arrived">Arrived</span></td>
+                  <td><button class="btn btn-dark btn-sm px-3">Check In</button></td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="py-0">
+                    <div class="blue-timeline"><span>NOW — 10:05 AM</span></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>10:15</td>
+                  <td class="fw-bold">Amaya Jay...</td>
+                  <td>Dr. Ranasin...</td>
+                  <td><span class="status-tag pending">Pending</span></td>
+                  <td><button class="btn btn-dark btn-sm px-3">Check In</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-        <div class="row mt-2">
-          <div class="col-lg-4 mb-3">
-            <div class="card text-white  mb-3 h-100">
-              <div class="card-header">Number of Registrations</div>
-              <div class="card-body card1">
-                <h2 class="card-title"><i class="bi bi-mortarboard"></i> +1450</h2>
-                
-              </div>
-            </div>
-          </div> 
-          <div class="col-lg-4 mb-3">
-            <div class="card text-white  mb-3 h-100">
-              <div class="card-header">Course</div>
-              <div class="card-body card2">
-                <h2 class="card-title"><i class="bi bi-book"></i> +17</h2>
-                  
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3">
-            <div class="card text-dark  mb-3 h-100">
-              <div class="card-header">Reviews</div>
-              <div class="card-body card3">
-                <h2 class="card-title"><i class="bi bi-view-list"></i> +1400</h2>
-                
-                 
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="col-lg-4">
+        <div class="white-card p-4 h-100">
+          <h6 class="text-dark fw-bold mb-4">DOCTOR SCHEDULES TODAY</h6>
+          <div class="doctor-list">
 
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="card">
-                <div class="card-header">
-                  Student Enrollment
-                </div>
-                <div class="card-body">
-                  <canvas id="myChart1" width="400" height="200"></canvas>
-                </div>
+            <div class="d-flex align-items-center mb-4 pb-3 border-bottom-faint">
+              <div class="avatar-circle">RS</div>
+              <div class="ms-3 flex-grow-1">
+                <p class="text-dark small fw-bold mb-0">Dr. R. Silva</p>
+                <p class="text-muted extra-small mb-0">Cardiology</p>
+              </div>
+              <div class="text-end">
+                <span class="status-tag in-room d-inline-block mb-1">In Session</span>
+                <p class="text-muted extra-small mb-0">6 slots left</p>
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <div class="card-header">
-                  Overoll Marks
-                </div>
-                <div class="card-body">
-                  <canvas id="myChart2" width="400" height="200"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="row mt-3">
-            <div class="col-lg-12">
-              <div class="card">
-                <div class="card-header">
-                  Our Qualified Panel
-                </div>
-                <div class="card-body dashboard-table">
-                  <div class="table-responsive">
-                    <table class="table table-striped data-table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">First</th>
-                          <th scope="col">Last</th>
-                          <th scope="col">Handle</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td colspan="2">Larry the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            <div class="d-flex align-items-center mb-4 pb-3 border-bottom-faint">
+              <div class="avatar-circle" style="background: #e6fcf5; color: #099268;">AF</div>
+              <div class="ms-3 flex-grow-1">
+                <p class="text-dark small fw-bold mb-0">Dr. A. Fernando</p>
+                <p class="text-muted extra-small mb-0">General Medicine</p>
+              </div>
+              <div class="text-end">
+                <span class="status-tag arrived d-inline-block mb-1">Available</span>
+                <p class="text-muted extra-small mb-0">8 slots left</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center mb-4 pb-3 border-bottom-faint">
+              <div class="avatar-circle" style="background: #fff9db; color: #f08c00;">KR</div>
+              <div class="ms-3 flex-grow-1">
+                <p class="text-dark small fw-bold mb-0">Dr. K. Ranasinghe</p>
+                <p class="text-muted extra-small mb-0">Paediatrics</p>
+              </div>
+              <div class="text-end">
+                <span class="status-tag pending d-inline-block mb-1">Break</span>
+                <p class="text-muted extra-small mb-0">Resumes 11:00</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center mb-4 pb-3">
+              <div class="avatar-circle" style="background: #f8f9fa; color: #adb5bd;">SP</div>
+              <div class="ms-3 flex-grow-1">
+                <p class="text-dark small fw-bold mb-0">Dr. S. Perera</p>
+                <p class="text-muted extra-small mb-0">Orthopaedics</p>
+              </div>
+              <div class="text-end">
+                <span class="status-tag d-inline-block mb-1" style="background: #f1f3f5; color: #868e96;">Off
+                  Today</span>
+                <p class="text-muted extra-small mb-0">—</p>
               </div>
             </div>
           </div>
       </div>
-    </main>
-</body>
+    </div>
+  </div>
 
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="white-card p-4 shadow-sm">
+        <h6 class="text-dark fw-bold mb-4">APPOINTMENT STATUS — WEEKLY</h6>
+        <canvas id="statusChart" height="200"></canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="white-card p-4 shadow-sm">
+        <h6 class="text-dark fw-bold mb-4">HOURLY APPOINTMENT LOAD</h6>
+        <canvas id="loadChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>

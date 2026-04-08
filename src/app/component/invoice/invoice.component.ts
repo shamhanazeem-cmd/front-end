@@ -10,8 +10,8 @@ import { PaymentService } from '../services/api/payment/payment.service';
   styleUrls: ['./invoice.component.scss']
 })
 
-export class InvoiceComponent implements OnInit{
-   invoiceForm!: FormGroup;
+export class InvoiceComponent implements OnInit {
+  invoiceForm!: FormGroup;
   invoices: any[] = [];
 
   isEdit: boolean = false;
@@ -34,16 +34,16 @@ export class InvoiceComponent implements OnInit{
     private invoiceService: InvoiceService,
     private statusService: StatusService,
     private paymentService: PaymentService,
-  ) {}
+  ) { }
 
 
- ngOnInit():void {
+  ngOnInit(): void {
     this.initFormGroup();
     this.loadInvoices();
     this.loadStatus();
     this.loadPayments();
-    
-  
+
+
   }
 
   initFormGroup() {
@@ -53,10 +53,10 @@ export class InvoiceComponent implements OnInit{
       issuedDate: ['', Validators.required],
       totalAmount: ['', Validators.required],
 
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
 
       payment: ['', Validators.required],
       status: ['', Validators.required]
@@ -71,8 +71,8 @@ export class InvoiceComponent implements OnInit{
   loadStatus() {
     this.statusService.GetAllStatus().subscribe({
       next: (response) => {
-        console.log("Data " , response);
-        
+        console.log("Data ", response);
+
         this.allStatuses = response.data?.dataList || response.data || response;
       },
       error: (error) => {
@@ -82,7 +82,7 @@ export class InvoiceComponent implements OnInit{
     });
   }
 
-    // Load Payments
+  // Load Payments
   loadPayments() {
     this.paymentService.getAllPayments().subscribe({
       next: (response) => {
@@ -168,7 +168,7 @@ export class InvoiceComponent implements OnInit{
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.invoiceService
         .createInvoice(formData, 'Add')
         .subscribe({
@@ -181,7 +181,7 @@ export class InvoiceComponent implements OnInit{
     }
   }
 
-   // Get by ID
+  // Get by ID
   getInvoiceById(id: number) {
 
     this.invoiceService.getInvoiceById(id).subscribe({
