@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/api/patient/patient.service';
 import { MedicalHistoryService } from '../services/api/medicalhistory/medicalhistory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { StatusService } from '../services/api/status/status.service';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class PatientComponent implements OnInit {
   patientForm!: FormGroup;
   patients: any[] = [];
-  allMedicalHistories: any[] = [];
+  allpatientMedicalHistory: any[] = [];
+  allStatuses: any[] = [];
   isEditPatient: boolean = false;
   editingPatientId: string | null = null;
   isLoadingPatients: boolean = false;
@@ -25,11 +27,13 @@ export class PatientComponent implements OnInit {
   totalElements: number = 0;
   hasNext: boolean = false;
   hasPrevious: boolean = false;
+  
 
   constructor(
     private formBuilder: FormBuilder,
     private patientService: PatientService,
-    private medicalHistoryService: MedicalHistoryService
+    private medicalHistoryService: MedicalHistoryService,
+    private statusService: StatusService,
 
   ) { }
 
@@ -37,11 +41,12 @@ export class PatientComponent implements OnInit {
     this.initFormGroup();
     this.loadMedicalHistories();
     this.loadPatients();
+    this.loadStatus();
   }
 
   initFormGroup() {
     this.patientForm = this.formBuilder.group({
-      id: [0],
+
       fullName: ['', Validators.required],
       nic: ['', [Validators.required,]],
       dob: ['', Validators.required],
@@ -49,11 +54,12 @@ export class PatientComponent implements OnInit {
       address: ['', Validators.required],
       contactNo: ['', [Validators.required]],
       email: ['', [Validators.required,]],
-      medicalHistory: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: ['']
+     patientMedicalHistory: ['', Validators.required],
+      status: ['', Validators.required],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }]
     });
   }
 
@@ -63,13 +69,29 @@ export class PatientComponent implements OnInit {
 
   }
 
+
+  // Load statuses
+  loadStatus() {
+    this.statusService.GetAllStatus().subscribe({
+      next: (response) => {
+        console.log("Data ", response);
+
+        this.allStatuses = response.data?.dataList || response.data || response;
+      },
+      error: (error) => {
+        console.error('Error loading statuses:', error);
+        this.allStatuses = [];
+      }
+    });
+  }
+
   loadMedicalHistories() {
     this.isLoadingMedicalHistory = true;
     this.medicalHistoryService.getAllMedicalHistories().subscribe({
       next: (response) => {
-        console.log("Data : 2" , response);
-        
-        this.allMedicalHistories = response.data?.dataList || [];
+        console.log("Data : 2", response);
+
+        this.allpatientMedicalHistory = response.data?.dataList || [];
         this.isLoadingMedicalHistory = false;
       },
       error: (error) => {
@@ -124,6 +146,7 @@ export class PatientComponent implements OnInit {
     this.currentPage = 0;
     this.loadPatients(this.currentPage, this.pageSize);
   }
+  
   SavePatient() {
     if (this.patientForm.invalid) {
       this.markFormGroupTouched();
@@ -132,21 +155,32 @@ export class PatientComponent implements OnInit {
 
     const formData = this.patientForm.value;
     console.log("Data :", formData);
-    
-    if (this.isEditPatient && this.editingPatientId) {
-      // Update existing patient - FIXED: Use updatePatient method
-      this.patientService.createPatient(this.editingPatientId, formData).subscribe({
-        next: (response) => {
-          console.log('Patient updated:', response);
-          this.loadPatients();
-          this.resetForm();
-        },
-        error: (error) => {
-          console.error('Error updating patient:', error);
-        }
-      });
+
+    if (this.isEditPatient && this.editingPatientId !== null) {
+
+      this.patientService
+        .createPatient(this.editingPatientId, formData)
+        .subscribe({
+          next: () => {
+            this.loadPatients();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    } else {
+      this.patientService
+        .createPatient(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadPatients();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
     }
   }
+
+
   GetPatientById(id: string) {
     this.patientService.getPatientsById(id).subscribe({
       next: (patient) => {
@@ -160,7 +194,7 @@ export class PatientComponent implements OnInit {
           address: patient.data.address,
           contactNo: patient.data.contactNo,
           email: patient.data.email,
-          medicalHistory: patient.data.medicalHistory?.id,
+          patientMedicalHistory: patient.data.medicalHistory?.id,
           createdBy: patient.data.createdBy,
           createdDate: patient.data.createdDate,
           modifyBy: patient.data.modifyBy,
@@ -199,7 +233,7 @@ export class PatientComponent implements OnInit {
       address: '',
       contactNo: '',
       email: '',
-      medicalHistory: '',
+      patientMedicalHistory: '',
       createdBy: '',
       createdDate: '',
       modifyBy: '',

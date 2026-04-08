@@ -28,6 +28,7 @@ import { PrescriptionComponent } from './component/prescription/prescription.com
 import { NotificationComponent } from './component/notification/notification.component';
 import { MedicationComponent } from './component/medication/medication.component';
 import { PaymentComponent } from './component/payment/payment.component';
+import { InvoiceComponent } from './component/invoice/invoice.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { PaymentComponent } from './component/payment/payment.component';
     PrescriptionComponent,
     NotificationComponent,
     MedicationComponent,
-    PaymentComponent
+    PaymentComponent,
+    InvoiceComponent
   ],
   imports: [
     BrowserModule,

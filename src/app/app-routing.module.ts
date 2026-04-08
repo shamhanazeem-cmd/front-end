@@ -19,6 +19,7 @@ import { PrescriptionComponent } from './component/prescription/prescription.com
 import { NotificationComponent } from './component/notification/notification.component';
 import { MedicationComponent } from './component/medication/medication.component';
 import { PaymentComponent } from './component/payment/payment.component';
+import { InvoiceComponent } from './component/invoice/invoice.component'
 
 const routes: Routes = [
 
@@ -29,6 +30,8 @@ const routes: Routes = [
   { path: 'student', component: StudentComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'medicalhistory', component: MedicalHistoryComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+  { path: 'invoice', component: InvoiceComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'medication', component: MedicationComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
@@ -55,6 +58,7 @@ const routes: Routes = [
   { path: 'login', component: InstituteLoginComponent },
 
   { path: 'forbidden', component: ForbiddenComponent },
+
 
   { path: 'privilege', component: PrivilegeComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } }
 ];

@@ -44,13 +44,15 @@
                             <!-- Doctor -->
                             <div class="form-group mt-3">
                                 <label class="form-label">Doctor <span class="text-danger">*</span></label>
-                                <ng-select formControlName="doctor" [items]="allDoctors" bindLabel="doctorName"
-                                    bindValue="id" placeholder="Select Doctor" [clearable]="false"
-                                    [ngClass]="{  'is-invalid': appointmentForm.get('doctor')?.touched && appointmentForm.get('doctor')?.invalid }">
+
+                                <ng-select formControlName="doctorAppointment" [items]="allDoctors"
+                                    bindLabel="doctorName" bindValue="id" placeholder="Select Doctor"
+                                    [clearable]="false"
+                                    [ngClass]="{ 'is-invalid': appointmentForm.get('doctorAppointment')?.touched && appointmentForm.get('doctorAppointment')?.invalid }">
                                 </ng-select>
 
                                 <div class="invalid-feedback"
-                                    *ngIf="appointmentForm.get('doctor')?.touched  && appointmentForm.get('doctor')?.errors?.['required']">
+                                    *ngIf="appointmentForm.get('doctorAppointment')?.touched && appointmentForm.get('doctorAppointment')?.errors?.['required']">
                                     Doctor is required.
                                 </div>
                             </div>
@@ -61,30 +63,32 @@
                                 <label class="form-label">Patient <span class="text-danger">*</span></label>
 
                                 <ng-select formControlName="patient" [items]="allPatients" bindLabel="fullName"
-                                  bindValue="id" placeholder="Select Patient" [clearable]="false"
-                                 [ngClass]="{ 'is-invalid': appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.invalid }">
+                                    bindValue="id" placeholder="Select Patient" [clearable]="false"
+                                    [ngClass]="{ 'is-invalid': appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.invalid }">
                                 </ng-select>
 
-                                <div class="invalid-feedback" *ngIf="appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.errors?.['required']">
+                                <div class="invalid-feedback"
+                                    *ngIf="appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.errors?.['required']">
                                     Patient is required.
                                 </div>
                             </div>
 
 
-                           <!--Schedule-->
+                            <!--Schedule-->
                             <div class="form-group mt-3">
                                 <label class="form-label">Schedule <span class="text-danger">*</span></label>
 
                                 <ng-select formControlName="schedule" [items]="allSchedules" bindLabel="dayOfWeek"
                                     bindValue="id" placeholder="Select Schedule" [clearable]="false"
                                     [ngClass]="{'is-invalid': appointmentForm.get('schedule')?.touched && appointmentForm.get('schedule')?.invalid }">
-                                 </ng-select>
+                                </ng-select>
 
-                                <div class="invalid-feedback" *ngIf="appointmentForm.get('schedule')?.touched && appointmentForm.get('schedule')?.errors?.['required']">
+                                <div class="invalid-feedback"
+                                    *ngIf="appointmentForm.get('schedule')?.touched && appointmentForm.get('schedule')?.errors?.['required']">
                                     Schedule is required.
                                 </div>
                             </div>
-                            
+
 
                             <!--status-->
                             <div class="form-group mt-3">
@@ -182,6 +186,7 @@
                         <table class="table table-striped table-bordered table-wrapper" *ngIf="!isLoadingAppointments">
                             <thead>
                                 <tr>
+
                                     <th>ID</th>
                                     <th>Date</th>
                                     <th>Time</th>
@@ -199,13 +204,14 @@
 
                             <tbody>
                                 <tr *ngFor="let a of appointments">
+                                    <!--<td>{{ a | json }}</td>-->
                                     <td>{{ a.id }}</td>
                                     <td>{{ a.appointmentDate }}</td>
                                     <td>{{ a.appointmentTime }}</td>
                                     <td>{{ a.doctor?.doctorName }}</td>
-                                    <td>{{ a.patient?.patientName }}</td>
-                                    <td>{{ a.schedule?.scheduleName }}</td>
-                                    <td>{{ a.status?.statusName }}</td>
+                                    <td>{{ a.patient?.patientSerialID }}</td>
+                                    <td>{{ a.schedule?.dayOfWeek }}</td>
+                                    <td>{{ a.status?.name }}</td>
                                     <td>{{ a.createdBy }}</td>
                                     <td>{{ a.createdDate | date: 'yyyy-MM-dd' }}</td>
                                     <td>{{ a.modifyBy }}</td>

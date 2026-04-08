@@ -194,13 +194,14 @@
 
               <tbody>
                 <tr *ngFor="let d of doctors">
+                 <!-- <td>{{ d | json }}</td>-->
                   <td>{{ d.id }}</td>
                   <td>{{ d.doctorName }}</td>
                   <td>{{ d.contactDetails }}</td>
                   <td>{{ d.mail }}</td>
                   <td>{{ d.roomNo }}</td>
-                  <td>{{ d.status?.statusName }}</td>
-                  <td>{{ d.specializations?.specializationName }}</td>
+                  <td>{{ d.status?.name }}</td>
+                  <td>{{ d.specializations?.name }}</td>
                   <td>{{ d.createdBy }}</td>
                   <td>{{ d.createdDate | date: 'yyyy-MM-dd' }}</td>
                   <td>{{ d.modifyBy }}</td>
