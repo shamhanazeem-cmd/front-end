@@ -21,6 +21,10 @@ export class PatientService {
     }
   }
 
+  getPatientsByYear(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/report/year`);
+  }
+
   
   getAllPatients(page: number = 0, size: number = 10): Observable<any> {
       let params = new HttpParams()
