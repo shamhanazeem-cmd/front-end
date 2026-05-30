@@ -20,6 +20,7 @@ import { NotificationComponent } from './component/notification/notification.com
 import { MedicationComponent } from './component/medication/medication.component';
 import { PaymentComponent } from './component/payment/payment.component';
 import { ReportPatientComponent } from './component/reports/report-patient/report-patient.component';
+import { InvoiceComponent } from './component/invoice/invoice.component';
 
 const routes: Routes = [
 
