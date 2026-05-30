@@ -102,6 +102,10 @@ export class DoctorComponent implements OnInit {
       next: (response) => {
         this.doctors = response.data.dataList;
 
+        const activeDoctors = this.doctors.filter((d: any) => d.status?.name === 'Active');
+       // console.log('Active doctors:', activeDoctors);
+
+        
         this.currentPage = response.data.pageNumber;
         this.totalPages = response.data.totalPages;
         this.totalElements = response.data.totalElements;
@@ -148,33 +152,37 @@ export class DoctorComponent implements OnInit {
 
   // Save or update
   saveDoctor() {
+      console.log('FORM VALID:', this.doctorForm.valid);
+      console.log(this.doctorForm);
+
     if (this.doctorForm.invalid) {
       this.markFormGroupTouched();
       return;
-    }
-    const formData = this.doctorForm.value;
+    } 
+   
+
+    const formData = this.doctorForm.getRawValue();
 
     if (this.isEdit && this.editingDoctorId !== null) {
+      const updatedData = { ...formData, id: this.editingDoctorId };
+      //console.log('Payload being sent:', JSON.stringify(updatedData));
 
-      this.doctorService
-        .createDoctor(this.editingDoctorId, formData)
-        .subscribe({
-          next: () => {
-            this.loadDoctors();
-            this.resetForm();
-          },
-          error: err => console.error(err)
-        });
+      this.doctorService.createDoctor(updatedData, 'Edit').subscribe({
+        next: (res) => {
+          this.loadDoctors();
+          console.log('Update success:', res);
+          this.resetForm();
+        },
+        error: err => console.error('Update failed:', err.status, err.error)
+      });
     } else {
-      this.doctorService
-        .createDoctor(formData, 'Add')
-        .subscribe({
-          next: () => {
-            this.loadDoctors();
-            this.resetForm();
-          },
-          error: err => console.error(err)
-        });
+      this.doctorService.createDoctor(formData, 'Add').subscribe({
+        next: () => {
+          this.loadDoctors();
+          this.resetForm();
+        },
+        error: err => console.error(err)
+      });
     }
   }
 

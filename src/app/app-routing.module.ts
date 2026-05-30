@@ -20,6 +20,7 @@ import { NotificationComponent } from './component/notification/notification.com
 import { MedicationComponent } from './component/medication/medication.component';
 import { PaymentComponent } from './component/payment/payment.component';
 import { InvoiceComponent } from './component/invoice/invoice.component'
+import { RfqComponent } from './component/rfq/rfq.component';
 
 const routes: Routes = [
 
@@ -51,6 +52,8 @@ const routes: Routes = [
 
   { path: 'course', component: CourseComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
+  { path: 'rfq', component: RfqComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
   { path: 'teacher', component: TeacherComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'class', component: ClassComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
@@ -58,7 +61,6 @@ const routes: Routes = [
   { path: 'login', component: InstituteLoginComponent },
 
   { path: 'forbidden', component: ForbiddenComponent },
-
 
   { path: 'privilege', component: PrivilegeComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } }
 ];

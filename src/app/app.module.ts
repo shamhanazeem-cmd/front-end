@@ -29,6 +29,7 @@ import { NotificationComponent } from './component/notification/notification.com
 import { MedicationComponent } from './component/medication/medication.component';
 import { PaymentComponent } from './component/payment/payment.component';
 import { InvoiceComponent } from './component/invoice/invoice.component';
+import { RfqComponent } from './component/rfq/rfq.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { InvoiceComponent } from './component/invoice/invoice.component';
     NotificationComponent,
     MedicationComponent,
     PaymentComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    RfqComponent
   ],
   imports: [
     BrowserModule,
