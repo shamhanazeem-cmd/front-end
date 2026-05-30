@@ -37,10 +37,10 @@ export class SpecializationComponent implements OnInit {
       id: [0],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: ['']
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }]
     });
   }
 
@@ -71,18 +71,27 @@ export class SpecializationComponent implements OnInit {
 
     const formData = this.specializationForm.value;
 
-    if (this.isEdit && this.editingSpecializationId) {
-      // Update existing specialization
-      this.specializationService.createSpecialization(this.editingSpecializationId, formData).subscribe({
-        next: (response) => {
-          console.log('Specialization updated:', response);
-          this.loadSpecializations();
-          this.resetForm();
-        },
-        error: (error) => {
-          console.error('Error updating specialization:', error);
-        }
-      });
+    if (this.isEdit && this.editingSpecializationId !== null) {
+
+      this.specializationService
+        .createSpecialization(this.editingSpecializationId, formData)
+        .subscribe({
+          next: () => {
+            this.loadSpecializations();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    } else {
+      this.specializationService
+        .createSpecialization(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadSpecializations();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
     }
   }
 

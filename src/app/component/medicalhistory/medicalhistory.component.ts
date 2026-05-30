@@ -42,10 +42,10 @@ export class MedicalHistoryComponent implements OnInit {
       pastSurgeries: [''],
       chronicConditions: ['', Validators.required],
       medicalHistory: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
       status: ['', Validators.required]
     });
   }
@@ -138,7 +138,7 @@ export class MedicalHistoryComponent implements OnInit {
           },
           error: err => console.error(err)
         });
-    }else {
+    } else {
       this.medicalHistoryService
         .createMedicalHistory(formData, 'Add')
         .subscribe({

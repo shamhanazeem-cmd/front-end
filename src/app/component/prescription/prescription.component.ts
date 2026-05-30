@@ -57,10 +57,10 @@ export class PrescriptionComponent implements OnInit {
       id: [0],
       prescriptionDate: ['', Validators.required],
       notes: ['', Validators.required],
-      createdBy: [''],
-      createdDate: [''],
-      modifyBy: [''],
-      modifyDate: [''],
+      createdBy: [{ value: '', disabled: true }],
+      createdDate: [{ value: '', disabled: true }],
+      modifyBy: [{ value: '', disabled: true }],
+      modifyDate: [{ value: '', disabled: true }],
 
       doctor: ['', Validators.required],
       patient: ['', Validators.required],
@@ -73,7 +73,7 @@ export class PrescriptionComponent implements OnInit {
     return this.prescriptionForm.controls;
   }
 
-  
+
   loadStatuses() {
     this.statusService.GetAllStatus().subscribe({
       next: (response) => {
@@ -87,7 +87,7 @@ export class PrescriptionComponent implements OnInit {
     });
   }
 
-  
+
   loadDoctors() {
     this.doctorService.GetAllDoctor().subscribe({
       next: (response) => {
@@ -114,7 +114,7 @@ export class PrescriptionComponent implements OnInit {
     });
   }
 
-  
+
   loadAppointment() {
     this.appointmentService.GetAllAppointment().subscribe({
       next: (response) => {
@@ -146,7 +146,7 @@ export class PrescriptionComponent implements OnInit {
     });
   }
 
-  
+
   // Pagination methods
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
@@ -175,7 +175,7 @@ export class PrescriptionComponent implements OnInit {
     this.loadPrescriptions(this.currentPage, this.pageSize);
   }
 
-   // Save or update
+  // Save or update
   savePrescription() {
     if (this.prescriptionForm.invalid) {
       this.markFormGroupTouched();
@@ -183,17 +183,28 @@ export class PrescriptionComponent implements OnInit {
     }
     const formData = this.prescriptionForm.value;
 
-    if (formData) {
-      this.prescriptionService.createPrescription(this.editingPrescriptionId, formData).subscribe({
-        next: (response) => {
-          console.log('Prescription updated:', response);
-          this.loadPrescriptions();
-          this.resetForm();
-        },
-        error: (error) => console.error('Error updating:', error)
-      });
-    } 
-    
+    if (this.isEdit && this.editingPrescriptionId !== null) {
+
+      this.prescriptionService
+        .createPrescription(this.editingPrescriptionId, formData)
+        .subscribe({
+          next: () => {
+            this.loadPrescriptions();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    } else {
+      this.prescriptionService
+        .createPrescription(formData, 'Add')
+        .subscribe({
+          next: () => {
+            this.loadPrescriptions();
+            this.resetForm();
+          },
+          error: err => console.error(err)
+        });
+    }
   }
 
   // Load item into form for update
@@ -222,7 +233,7 @@ export class PrescriptionComponent implements OnInit {
     });
   }
 
-  
+
   deleteById(id: number) {
     if (confirm('Are you sure you want to delete this prescription?')) {
       this.prescriptionService.DeletePrescriptionById(id).subscribe({

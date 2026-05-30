@@ -31,6 +31,8 @@ const routes: Routes = [
 
   { path: 'medicalhistory', component: MedicalHistoryComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
+  { path: 'invoice', component: InvoiceComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
   { path: 'medication', component: MedicationComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'notification', component: NotificationComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },

@@ -11,10 +11,13 @@
       </button>
       <!-- offcancas trigger -->
 
-      <a class="navbar-brand fw-bold" href="#">HUMBER</a>
+      <a class="navbar-brand" href="#">
+        <img src="../assets/logo.png" alt="E-MEDIC Logo" class="navbar-logo">
+      </a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="top-icon"><i class="bi bi-caret-down"></i></span>
+        <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -48,7 +51,7 @@
   <!-- Nav Bar -->
 
   <!-- offcanvas -->
-  <div class="offcanvas offcanvas-start bg-dark text-white sidebar-nav" tabindex="-1" id="offcanvasExample"
+  <div class="offcanvas offcanvas-start text-white sidebar-nav " tabindex="-1" id="offcanvasExample"
     aria-labelledby="offcanvasExampleLabel">
 
 
@@ -57,10 +60,10 @@
       <nav class="navbar-dark">
         <ul class="navbar-nav">
           <li>
-            <div class="muted small fw-bold text-uppercase px-3">CORE</div>
+            <div class="muted small fw-bold text-uppercase px-2">CORE</div>
           </li>
           <li>
-            <a routerLink="/dashboard" class="nav-link  px-3 active">
+            <a routerLink="/dashboard" class="nav-link  px-2 active">
               <span class="me-2"><i class="bi bi-house"></i></span>
               <span>Dashboard</span>
 
@@ -72,11 +75,11 @@
           </li>
 
           <li>
-            <div class="muted small fw-bold text-uppercase px-3">InterFace</div>
+            <div class="muted small fw-bold text-uppercase px-2">InterFace</div>
           </li>
 
           <li>
-            <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample" role="button"
+            <a class="nav-link px-2 sidebar-link" data-bs-toggle="collapse" href="#collapseExample" role="button"
               aria-expanded="false" aria-controls="collapseExample">
               <span class="me-2"><i class="bi bi-columns"></i></span>
               <span>Management</span>
@@ -128,6 +131,16 @@
 
 
                   <li>
+                    <a routerLink="/invoice" class="nav-link px-3">
+                      <span class="me-1">
+                        <i class="bi bi-clipboard2-pulse-fill"></i>
+                      </span>
+                      <span> Invoice</span>
+                    </a>
+                  </li>
+
+
+                  <li>
                     <a routerLink="/schedule" class="nav-link px-3">
                       <span class="me-1">
                         <i class="bi bi-clipboard2-pulse-fill"></i>
@@ -158,6 +171,16 @@
 
 
                   <li>
+                    <a routerLink="/medication" class="nav-link px-3">
+                      <span class="me-1">
+                        <i class="bi bi-clipboard2-pulse-fill"></i>
+                      </span>
+                      <span> Medication</span>
+                    </a>
+                  </li>
+
+
+                  <li>
                     <a routerLink="/prescription" class="nav-link px-3">
                       <span class="me-1">
                         <i class="bi bi-clipboard2-pulse-fill"></i>
@@ -165,9 +188,9 @@
                       <span> Prescription</span>
                     </a>
                   </li>
-                  
 
-                   <li>
+
+                  <li>
                     <a routerLink="/payment" class="nav-link px-3">
                       <span class="me-1">
                         <i class="bi bi-clipboard2-pulse-fill"></i>
@@ -302,7 +325,7 @@
           <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseReport" role="button"
             aria-expanded="false" aria-controls="collapseReport">
             <span class="me-2"><i class="bi bi-graph-up"></i></span>
-            <span>Institute</span>
+            <span>Chanelling</span>
             <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
           </a>
 
@@ -322,11 +345,12 @@
                 <li>
                   <a routerLink="/studentreport" class="nav-link px-3">
                     <span class="me-1">
-                      <i class="bi bi-graph-down-arrow"></i>
+                      <i class="bi bi-graph-up-arrow"></i>
                     </span>
-                    <span>Student Report</span>
+                    <span>Payment Report</span>
                   </a>
                 </li>
+
 
               </ul>
             </div>
@@ -352,7 +376,7 @@
 <body *ngIf="!isLoggedIn()">
   <!-- Nav Bar -->
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
     <div class="container-fluid">
 
       <!-- offcanvas trigger -->
@@ -362,18 +386,29 @@
       </button>
       <!-- offcancas trigger -->
 
-      <a class="navbar-brand fw-bold text-center" href="#">LOCAL INSTITUTE LOGO</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="top-icon"><i class="bi bi-caret-down"></i></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <a class="navbar-brand" href="#">
+        <img src="../assets/logo.png" alt="E-MEDIC Logo" class="navbar-logo">
+      </a>
 
-        <div class="d-flex ms-auto">
-          <button class="btn btn-danger mb-2 mb-lg-0 px-3 py-1" *ngIf="!isLoggedIn()" (click)="logIn()"><i
-              class="bi bi-box-arrow-right"></i> LOGIN</button>
-          <button class=" btn btn-warning mb-2 mb-lg-0 bg-danger px-3 py-1" *ngIf="isLoggedIn()" (click)="logOut()"><i
-              class="bi bi-box-arrow-left"></i> LOGOUT</button>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#practoContent">
+        <i class="bi bi-three-dots-vertical"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="practoContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4" *ngIf="!isLoggedIn()">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center ms-auto gap-2">
+          <button class="btn btn-practo-login" *ngIf="!isLoggedIn()" (click)="logIn()">
+            <i class="bi bi-box-arrow-in-right me-1"></i> LOGIN
+          </button>
+
+          <button class="btn btn-practo-logout" *ngIf="isLoggedIn()" (click)="logOut()">
+            <i class="bi bi-power me-1"></i> LOGOUT
+          </button>
         </div>
 
       </div>
@@ -381,89 +416,100 @@
   </nav>
   <!-- Nav Bar -->
 
-  <!-- offcanvas -->
-  <div class="offcanvas offcanvas-start bg-dark text-white sidebar-nav" tabindex="-1" id="offcanvasExample"
-    aria-labelledby="offcanvasExampleLabel">
 
-    <div class="offcanvas-body p-0 ">
-
-      <nav class="navbar-dark">
-        <img src="../assets/student/sidestudentimg.jpg" />
-      </nav>
-    </div>
-  </div>
-  <!-- offcanvas -->
-
-  <main class="">
+  <main [style.margin-left]="isLoggedIn() ? '220px' : '0'" style="transition: margin-left 0.3s ease;">
     <div class="container-fluid">
 
       <div class="row">
         <router-outlet></router-outlet>
       </div>
 
-      <div class="my-4">
-        <hr>
-      </div>
+      <div *ngIf="!isLoggedIn()" class="landing-container py-5">
+        <div class="container mb-5 mt-5">
+          <div class="row g-4 justify-content-center">
 
-      <div class="mx-5 ">
-        <div class="row mt-5 pt-3">
-          <div class="col-lg-4 mb-3">
-            <div class="card text-white  mb-3 h-100">
-              <div class="card-header">Our Official Web</div>
-              <div class="card-body card1">
-                <h4 class="card-title">HUMBER.COM</h4>
-
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="service-card shadow-sm h-100">
+                <div class="img-box bg-light-blue">
+                  <img src="../assets/doctor/finddoc1.webp" alt="Find Doctor">
+                </div>
+                <div class="content p-3">
+                  <h5 class="fw-bold">Find Doctors</h5>
+                  <p class="text-muted small">Confirmed appointments</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-4 mb-3">
-            <div class="card text-white  mb-3 h-100">
-              <div class="card-header">Student LMS</div>
-              <div class="card-body card2">
-                <h4 class="card-title">LMS</h4>
 
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="service-card shadow-sm h-100">
+                <div class="img-box bg-light-teal">
+                  <img src="../assets/doctor/bookAppointment.jpg" alt="Book Appointment">
+                </div>
+                <div class="content p-3">
+                  <h5 class="fw-bold">Book Appointment</h5>
+                  <p class="text-muted small">Confirmed appointments</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-4 mb-3">
-            <div class="card text-dark  mb-3 h-100">
-              <div class="card-header">News & Blog</div>
-              <div class="card-body card3">
-                <h4 class="card-title">OUR LATEST NEWS</h4>
 
-
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="service-card shadow-sm h-100">
+                <div class="img-box bg-light-purple">
+                  <img src="../assets/doctor/Report.jpg" alt="View Reports">
+                </div>
+                <div class="content p-3">
+                  <h5 class="fw-bold">View Reports</h5>
+                  <p class="text-muted small">Lab Reports</p>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
 
-        <div class="row mt-2">
-          <div class="col-lg-4 mb-3">
-            <div class="card text-white  mb-3 h-100">
-              <div class="card-header">Student Book</div>
-              <div class="card-body card4">
-                <h4 class="card-title">DOWNLOAD</h4>
-              </div>
+        <div class="bg-light py-5 mt-5">
+          <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="fw-bold">Read top articles from experts</h3>
+              <button class="btn btn-primary btn-sm">See all articles</button>
             </div>
-          </div>
-          <div class="col-lg-4 mb-3">
-            <div class="card text-white  mb-3 h-100">
-              <div class="card-header">Our Partnership </div>
-              <div class="card-body card5">
-                <h4 class="card-title">ABOUT</h4>
+
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="card border-0 overflow-hidden shadow-sm h-100">
+                  <img src="../assets/blogs/Immune.jpg" class="card-img-top" alt="Tips">
+                  <div class="card-body">
+                    <span class="badge bg-info text-white mb-2">Self Care</span>
+                    <h6 class="fw-bold">10 ways to boost your immunity this season</h6>
+                    <p class="small text-muted">Written by Dr. Silva</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3">
-            <div class="card text-dark mb-3 h-100">
-              <div class="card-header">Student Life</div>
-              <div class="card-body card6">
-                <h4 class="card-title">OUR STUDENTS</h4>
+
+              <div class="col-md-4">
+                <div class="card border-0 overflow-hidden shadow-sm h-100">
+                  <img src="../assets/blogs/MentalHealth.jpg" class="card-img-top" alt="Tips">
+                  <div class="card-body">
+                    <span class="badge bg-info text-white mb-2">Mental Health</span>
+                    <h6 class="fw-bold">Simple techniques to reduce stress and anxiety</h6>
+                    <p class="small text-muted">Written by Dr. Perera</p>
+                  </div>
+                </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="card border-0 overflow-hidden shadow-sm h-100">
+                  <img src="../assets/blogs/Child care.webp" class="card-img-top" alt="Tips">
+                  <div class="card-body">
+                    <span class="badge bg-info text-white mb-2">Child Care</span>
+                    <h6 class="fw-bold">Common childhood illnesses and when to see a doctor</h6>
+                    <p class="small text-muted">Written by Dr. Kumari</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
-  </main>
-</body>

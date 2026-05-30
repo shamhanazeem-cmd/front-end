@@ -14,6 +14,8 @@ export class DashboardComponent {
     constructor(private chartService: ChartserviceService) {}
   ngOnInit(){
     this.loadDashboard();
+    this.createStatusChart();
+    this.createLoadChart();
     }
 
   loadDashboard() {
@@ -76,4 +78,45 @@ export class DashboardComponent {
     );
   }
 
+
+  createStatusChart() {
+    new Chart("statusChart", {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        datasets: [
+          { label: 'Confirmed', data: [30, 38, 32, 45, 35], backgroundColor: '#2886dd' }, // Green
+          { label: 'Pending', data: [8, 12, 10, 8, 10], backgroundColor: '#d69a2c '},    // Orange
+          { label: 'Cancelled', data: [5, 3, 5, 2, 4], backgroundColor: '#d44b4b' }     // Red
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } },
+        scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }
+      }
+    });
+  }
+
+  createLoadChart() {
+    new Chart("loadChart", {
+      type: 'bar',
+      data: {
+        labels: ['8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm'],
+        datasets: [{
+          label: 'Patients',
+          data: [3, 7, 9, 8, 5, 6, 8, 7, 4],
+          backgroundColor: '#67a1d7', 
+          borderRadius: 5
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  }
 }
+
+
