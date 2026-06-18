@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build: .
+    container_name: institute-web
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+    # API calls run in the browser and target http://localhost:8010.
+    # Ensure your backend container publishes port 8010 to the host.
