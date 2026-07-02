@@ -19,7 +19,8 @@ import { PrescriptionComponent } from './component/prescription/prescription.com
 import { NotificationComponent } from './component/notification/notification.component';
 import { MedicationComponent } from './component/medication/medication.component';
 import { PaymentComponent } from './component/payment/payment.component';
-import { InvoiceComponent } from './component/invoice/invoice.component'
+import { ReportPatientComponent } from './component/reports/report-patient/report-patient.component';
+import { InvoiceComponent } from './component/invoice/invoice.component';
 import { RfqComponent } from './component/rfq/rfq.component';
 
 const routes: Routes = [
@@ -62,7 +63,9 @@ const routes: Routes = [
 
   { path: 'forbidden', component: ForbiddenComponent },
 
-  { path: 'privilege', component: PrivilegeComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } }
+  { path: 'privilege', component: PrivilegeComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
+
+  { path: 'patientReport', component: ReportPatientComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
 ];
 
 @NgModule({
