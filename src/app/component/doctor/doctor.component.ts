@@ -13,6 +13,7 @@ import { SpecializationService } from '../services/api/specialization/specializa
 export class DoctorComponent implements OnInit {
   doctorForm!: FormGroup;
   doctors: any[] = [];
+  doctor:any;
   isEdit: boolean = false;
   editingDoctorId: number | null = null;
   isLoadingDoctors: boolean = false;
@@ -189,26 +190,29 @@ export class DoctorComponent implements OnInit {
   getDoctorById(id: number) {
     this.doctorService.getDoctorById(id).subscribe({
       next: (response) => {
-        const doctor = response.data;
+        console.log('data:',response);
+        this.doctor = response.data.dataList[0];
+console.log('docdatalist',this.doctor)
 
         this.doctorForm.patchValue({
-          id: doctor.id,
-          doctorName: doctor.doctorName,
-          contactDetails: doctor.contactDetails,
-          mail: doctor.mail,
-          roomNo: doctor.roomNo,
+          id: this.doctor.id,
+          doctorName: this.doctor.doctorName,
+          contactDetails: this.doctor.contactDetails,
+          mail:this.doctor.mail,
+          roomNo: this.doctor.roomNo,
 
-          createdBy: doctor.createdBy,
-          createdDate: doctor.createdDate,
-          modifyBy: doctor.modifyBy,
-          modifyDate: doctor.modifyDate,
+          createdBy: this.doctor.createdBy,
+          createdDate:this.doctor.createdDate,
+          modifyBy: this.doctor.modifyBy,
+          modifyDate:this.doctor.modifyDate,
 
-          status: doctor.status?.id || doctor.status,
-          specializations: doctor.specializations?.id || doctor.specializations
+          status: this.doctor.status?.id || this.doctor.status,
+          specializations: this.doctor.specializations?.id || this.doctor.specializations
         });
+        console.log('dataForm',this.doctorForm);
 
         this.isEdit = true;
-        this.editingDoctorId = doctor.id;
+        this.editingDoctorId = this.doctor.id;
       },
       error: (error) => console.error('Error loading doctor by ID:', error)
     });
