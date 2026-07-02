@@ -203,7 +203,7 @@
                             </thead>
 
                             <tbody>
-                                <tr *ngFor="let a of appointments">
+                                <tr *ngFor="let a of appointments.slice().reverse()">
                                     <!--<td>{{ a | json }}</td>-->
                                     <td>{{ a.id }}</td>
                                     <td>{{ a.appointmentDate }}</td>

@@ -21,6 +21,7 @@ import { MedicationComponent } from './component/medication/medication.component
 import { PaymentComponent } from './component/payment/payment.component';
 import { ReportPatientComponent } from './component/reports/report-patient/report-patient.component';
 import { InvoiceComponent } from './component/invoice/invoice.component';
+import { RfqComponent } from './component/rfq/rfq.component';
 
 const routes: Routes = [
 
@@ -51,6 +52,8 @@ const routes: Routes = [
   { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'course', component: CourseComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+  { path: 'rfq', component: RfqComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'teacher', component: TeacherComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
