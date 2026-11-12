@@ -149,9 +149,10 @@ export class NotificationComponent implements OnInit {
     const formdata = this.notificationForm.value;
 
     if (this.isEdit && this.editingNotificationId !== null) {
+      const updatedData={...formdata, id:this.editingNotificationId}
 
       this.notificationService
-        .createNotification(this.editingNotificationId, formdata)
+        .createNotification(updatedData,'Edit')
         .subscribe({
           next: () => {
             this.loadNotifications();
@@ -175,7 +176,7 @@ export class NotificationComponent implements OnInit {
   getNotificationById(id: number) {
     this.notificationService.GetNotificationById(id).subscribe({
       next: (res) => {
-        const ntf = res.data;
+        const ntf = res.data.dataList[0];
 
         this.notificationForm.patchValue({
           id: ntf.id,

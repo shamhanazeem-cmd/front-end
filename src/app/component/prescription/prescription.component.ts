@@ -185,8 +185,9 @@ export class PrescriptionComponent implements OnInit {
 
     if (this.isEdit && this.editingPrescriptionId !== null) {
 
+      const updatedData={...formData, id:this.editingPrescriptionId}
       this.prescriptionService
-        .createPrescription(this.editingPrescriptionId, formData)
+        .createPrescription(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadPrescriptions();
@@ -211,23 +212,25 @@ export class PrescriptionComponent implements OnInit {
   getPrescriptionById(id: number) {
     this.prescriptionService.GetPrescriptionById(id).subscribe({
       next: (res) => {
+        const pres=res.data.dataList[0];
+        
         this.prescriptionForm.patchValue({
-          id: res.data.id,
-          prescriptionDate: res.data.prescriptionDate,
-          notes: res.data.notes,
-          createdBy: res.data.createdBy,
-          createdDate: res.data.createdDate,
-          modifyBy: res.data.modifyBy,
-          modifyDate: res.data.modifyDate,
+          id:pres.id,
+          prescriptionDate: pres.prescriptionDate,
+          notes: pres.notes,
+          createdBy: pres.createdBy,
+          createdDate:pres.createdDate,
+          modifyBy: pres.modifyBy,
+          modifyDate:pres.modifyDate,
 
-          doctor: res.data.doctor?.id,
-          patient: res.data.patient?.id,
-          appointment: res.data.appointment?.id,
-          status: res.data.status?.id
+          doctor:pres.doctor?.id,
+          patient: pres.patient?.id,
+          appointment:pres.appointment?.id,
+          status: pres.status?.id
         });
 
         this.isEdit = true;
-        this.editingPrescriptionId = res.data.id;
+        this.editingPrescriptionId =pres.id;
       },
       error: (err) => console.error('Error loading prescription:', err)
     });

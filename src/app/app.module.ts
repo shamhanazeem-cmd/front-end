@@ -30,6 +30,7 @@ import { MedicationComponent } from './component/medication/medication.component
 import { PaymentComponent } from './component/payment/payment.component';
 import { InvoiceComponent } from './component/invoice/invoice.component';
 import { RfqComponent } from './component/rfq/rfq.component';
+import { ReportAppointmentComponent } from './component/reports/report-appointment/report-appointment/report-appointment.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { RfqComponent } from './component/rfq/rfq.component';
     MedicationComponent,
     PaymentComponent,
     InvoiceComponent,
-    RfqComponent
+    RfqComponent,
+    ReportAppointmentComponent
   ],
   imports: [
     BrowserModule,

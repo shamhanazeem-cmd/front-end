@@ -128,9 +128,9 @@ export class MedicalHistoryComponent implements OnInit {
     const formData = this.medicalHistoryForm.value;
 
     if (this.isEdit && this.editingMedicalHistoryId !== null) {
-
+      const updatedData = { ...formData, id: this.editingMedicalHistoryId }
       this.medicalHistoryService
-        .createMedicalHistory(this.editingMedicalHistoryId, formData)
+        .createMedicalHistory(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadMedicalHistories();
@@ -154,22 +154,25 @@ export class MedicalHistoryComponent implements OnInit {
 
   GetMedicalHistoryById(id: number) {
     this.medicalHistoryService.GetMedicalHistoryById(id).subscribe({
-      next: (medicalHistory) => {
-        // Populate form with medicalHistory data for editing
+      next: (response) => {
+        console.log('Getdata:', response);
+
+        const mh = response.data.dataList[0];
+
         this.medicalHistoryForm.patchValue({
-          id: medicalHistory.data.id,
-          allergies: medicalHistory.data.allergies,
-          pastSurgeries: medicalHistory.data.pastSurgeries,
-          chronicConditions: medicalHistory.data.chronicConditions,
-          medicalHistory: medicalHistory.data.medicalHistory,
-          createdBy: medicalHistory.data.createdBy,
-          createdDate: medicalHistory.data.createdDate,
-          modifyBy: medicalHistory.data.modifyBy,
-          modifyDate: medicalHistory.data.modifyDate,
-          status: medicalHistory.data.status?.id || medicalHistory.data.status
+          id: mh.id,
+          allergies: mh.allergies,
+          pastSurgeries: mh.pastSurgeries,
+          chronicConditions: mh.chronicConditions,
+          medicalHistory: mh.medicalHistory,
+          createdBy: mh.createdBy,
+          createdDate: mh.createdDate,
+          modifyBy: mh.modifyBy,
+          modifyDate: mh.modifyDate,
+          status: mh.status?.id || mh.status
         });
         this.isEdit = true;
-        this.editingMedicalHistoryId = medicalHistory.data.id;
+        this.editingMedicalHistoryId = mh.id;
       },
       error: (error) => console.error('Error loading by ID:', error)
     });

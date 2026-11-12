@@ -148,8 +148,9 @@ export class RfqComponent implements OnInit {
 
     if (this.isEditRFQ && this.editingRFQId !== null) {
 
+      const updatedData={...formData, id:this.editingRFQId}
       this.rfqService
-        .createRFQ(this.editingRFQId, formData)
+        .createRFQ(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadRFQs();
@@ -173,7 +174,7 @@ export class RfqComponent implements OnInit {
   GetRFQById(id: string) {
     this.rfqService.getRfqById(id).subscribe({
       next: (res) => {
-        const data = res.data;
+        const data = res.data.dataList[0];
         this.rfqForm.patchValue({
           id: data.id,
           rfqNumber: data.rfqNumber,

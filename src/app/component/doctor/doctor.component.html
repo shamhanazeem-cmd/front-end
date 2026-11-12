@@ -9,127 +9,157 @@
     <div class="row">
       <div class="col-lg-12 mb-3">
         <div class="card text-dark mb-3 h-100">
-          <div class="card-header bg-info fw-bold">Doctor Form</div>
+          <div class="card-header text-white fw-bold" style="background-color: #0085ff;">
+            <i class="bi bi-person-lines-fill me-2"></i> Doctor Form
+          </div>
           <div class="card-body">
 
             <form [formGroup]="doctorForm" (ngSubmit)="saveDoctor()">
-              <!-- Doctor Name -->
-              <div class="form-group">
-                <label for="doctorName" class="form-label">Doctor Name <span class="text-danger">*</span></label>
-                <input type="text" id="doctorName" formControlName="doctorName" class="form-control mt-2"
-                  [ngClass]="{ 'is-invalid': doctorForm.get('doctorName')?.invalid && doctorForm.get('doctorName')?.touched }"
-                  placeholder="Enter Doctor Name">
 
-                <div class="invalid-feedback"
-                  *ngIf="doctorForm.get('doctorName')?.touched && doctorForm.get('doctorName')?.errors?.['required']">
-                  Doctor Name is required.
+              <!-- Row 1 -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mt-2">
+                    <label for="doctorName" class="form-label">Doctor Name <span class="text-danger">*</span></label>
+                    <input type="text" id="doctorName" formControlName="doctorName" class="form-control mt-2"
+                      [ngClass]="{'is-invalid': doctorForm.get('doctorName')?.invalid && doctorForm.get('doctorName')?.touched}"
+                      placeholder="Enter Doctor Name">
+
+                    <div class="invalid-feedback"
+                      *ngIf="doctorForm.get('doctorName')?.touched && doctorForm.get('doctorName')?.errors?.['required']">
+                      Doctor Name is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group mt-2">
+                    <label for="contactDetails" class="form-label">Contact Details <span
+                        class="text-danger">*</span></label>
+                    <input type="text" id="contactDetails" formControlName="contactDetails" class="form-control mt-2"
+                      [ngClass]="{'is-invalid': doctorForm.get('contactDetails')?.invalid && doctorForm.get('contactDetails')?.touched}"
+                      placeholder="Enter Contact Number">
+
+                    <div class="invalid-feedback"
+                      *ngIf="doctorForm.get('contactDetails')?.touched && doctorForm.get('contactDetails')?.errors?.['required']">
+                      Contact Details is required.
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Contact Details -->
-              <div class="form-group mt-3">
-                <label for="contactDetails" class="form-label">Contact Details <span
-                    class="text-danger">*</span></label>
-                <input type="text" id="contactDetails" formControlName="contactDetails" class="form-control mt-2"
-                  [ngClass]="{ 'is-invalid': doctorForm.get('contactDetails')?.invalid && doctorForm.get('contactDetails')?.touched }"
-                  placeholder="Enter Contact Number">
+              <!-- Row 2 -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label for="mail" class="form-label">E-mail <span class="text-danger">*</span></label>
+                    <input type="email" id="mail" formControlName="mail" class="form-control mt-2"
+                      [ngClass]="{'is-invalid': doctorForm.get('mail')?.invalid && doctorForm.get('mail')?.touched}"
+                      placeholder="Enter Email">
 
-                <div class="invalid-feedback"
-                  *ngIf="doctorForm.get('contactDetails')?.touched && doctorForm.get('contactDetails')?.errors?.['required']">
-                  Contact Details is required.
+                    <div class="invalid-feedback"
+                      *ngIf="doctorForm.get('mail')?.touched && doctorForm.get('mail')?.errors?.['required']">
+                      Email is required.
+                    </div>
+                    <div class="invalid-feedback"
+                      *ngIf="doctorForm.get('mail')?.touched && doctorForm.get('mail')?.errors?.['email']">
+                      Invalid email format.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label for="roomNo" class="form-label">Room No <span class="text-danger">*</span></label>
+                    <input type="text" id="roomNo" formControlName="roomNo" class="form-control mt-2"
+                      [ngClass]="{'is-invalid': doctorForm.get('roomNo')?.invalid && doctorForm.get('roomNo')?.touched}"
+                      placeholder="Enter Room Number">
+
+                    <div class="invalid-feedback"
+                      *ngIf="doctorForm.get('roomNo')?.touched && doctorForm.get('roomNo')?.errors?.['required']">
+                      Room Number is required.
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Email -->
-              <div class="form-group mt-3">
-                <label for="mail" class="form-label">E-mail <span class="text-danger">*</span></label>
-                <input type="email" id="mail" formControlName="mail" class="form-control mt-2"
-                  [ngClass]="{ 'is-invalid': doctorForm.get('mail')?.invalid && doctorForm.get('mail')?.touched }"
-                  placeholder="Enter Email">
-
-                <div class="invalid-feedback"
-                  *ngIf="doctorForm.get('mail')?.touched && doctorForm.get('mail')?.errors?.['required']">
-                  Email is required.
+              <!-- Row 3 -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label for="createdBy" class="form-label">Created By</label>
+                    <input type="text" id="createdBy" formControlName="createdBy" class="form-control mt-2"
+                      placeholder="Enter Creator">
+                  </div>
                 </div>
-                <div class="invalid-feedback"
-                  *ngIf="doctorForm.get('mail')?.touched && doctorForm.get('mail')?.errors?.['email']">
-                  Invalid email format.
-                </div>
-              </div>
 
-              <!-- Room No -->
-              <div class="form-group mt-3">
-                <label for="roomNo" class="form-label">Room No <span class="text-danger">*</span></label>
-                <input type="text" id="roomNo" formControlName="roomNo" class="form-control mt-2"
-                  [ngClass]="{ 'is-invalid': doctorForm.get('roomNo')?.invalid && doctorForm.get('roomNo')?.touched }"
-                  placeholder="Enter Room Number">
-
-                <div class="invalid-feedback" *ngIf="doctorForm.get('roomNo')?.touched && doctorForm.get('roomNo')?.errors?.['required']">
-                  Room Number is required.
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label for="createdDate" class="form-label">Created Date</label>
+                    <input type="date" id="createdDate" formControlName="createdDate" class="form-control mt-2">
+                  </div>
                 </div>
               </div>
 
-              <!-- Created By -->
-              <div class="form-group mt-3">
-                <label for="createdBy" class="form-label">Created By</label>
-                <input type="text" id="createdBy" formControlName="createdBy" class="form-control mt-2"
-                  placeholder="Enter Creator">
-              </div>
+              <!-- Row 4 -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label for="modifyBy" class="form-label">Modified By</label>
+                    <input type="text" id="modifyBy" formControlName="modifyBy" class="form-control mt-2"
+                      placeholder="Enter Modifier">
+                  </div>
+                </div>
 
-              <!-- Created Date -->
-              <div class="form-group mt-3">
-                <label for="createdDate" class="form-label">Created Date</label>
-                <input type="date" id="createdDate" formControlName="createdDate" class="form-control mt-2">
-              </div>
-
-              <!-- Modified By -->
-              <div class="form-group mt-3">
-                <label for="modifyBy" class="form-label">Modified By</label>
-                <input type="text" id="modifyBy" formControlName="modifyBy" class="form-control mt-2"
-                  placeholder="Enter Modifier">
-              </div>
-
-              <!-- Modified Date -->
-              <div class="form-group mt-3">
-                <label for="modifyDate" class="form-label">Modified Date</label>
-                <input type="date" id="modifyDate" formControlName="modifyDate" class="form-control mt-2">
-              </div>
-
-              <!-- Status -->
-              <div class="form-group mt-3">
-                <label class="form-label">Status <span class="text-danger">*</span></label>
-                <ng-select formControlName="status" [items]="allStatuses" bindLabel="name" bindValue="id"
-                  placeholder="Select Status" [clearable]="false"
-                  [ngClass]="{ 'is-invalid': doctorForm.get('status')?.invalid && doctorForm.get('status')?.touched }">
-                </ng-select>
-
-                <div class="invalid-feedback"
-                  *ngIf="doctorForm.get('status')?.touched && doctorForm.get('status')?.errors?.['required']">
-                  Status is required.
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label for="modifyDate" class="form-label">Modified Date</label>
+                    <input type="date" id="modifyDate" formControlName="modifyDate" class="form-control mt-2">
+                  </div>
                 </div>
               </div>
 
-              <!-- Specialization -->
-              <div class="form-group mt-3">
-                <label class="form-label">Specialization <span class="text-danger">*</span></label>
-                <ng-select formControlName="specializations" [items]="allSpecializations" bindLabel="name"
-                  bindValue="id" placeholder="Select Specialization" [clearable]="false"
-                  [ngClass]="{ 'is-invalid': doctorForm.get('specializations')?.invalid && doctorForm.get('specializations')?.touched }">
-                </ng-select>
+              <!-- Row 5 -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label class="form-label">Status <span class="text-danger">*</span></label>
+                    <ng-select formControlName="status" [items]="allStatuses" bindLabel="name" bindValue="id"
+                      placeholder="Select Status" [clearable]="false"
+                      [ngClass]="{'is-invalid': doctorForm.get('status')?.invalid && doctorForm.get('status')?.touched}">
+                    </ng-select>
 
-                <div class="invalid-feedback"
-                  *ngIf="doctorForm.get('specializations')?.touched && doctorForm.get('specializations')?.errors?.['required']">
-                  Specialization is required.
+                    <div class="invalid-feedback"
+                      *ngIf="doctorForm.get('status')?.touched && doctorForm.get('status')?.errors?.['required']">
+                      Status is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group mt-3">
+                    <label class="form-label">Specialization <span class="text-danger">*</span></label>
+                    <ng-select formControlName="specializations" [items]="allSpecializations" bindLabel="name"
+                      bindValue="id" placeholder="Select Specialization" [clearable]="false"
+                      [ngClass]="{'is-invalid': doctorForm.get('specializations')?.invalid && doctorForm.get('specializations')?.touched}">
+                    </ng-select>
+
+                    <div class="invalid-feedback"
+                      *ngIf="doctorForm.get('specializations')?.touched && doctorForm.get('specializations')?.errors?.['required']">
+                      Specialization is required.
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <!-- Buttons -->
-              <div class="form-group mt-4 text-end">
+              <div class="text-end mt-4">
                 <button type="submit" class="btn btn-primary me-2" [disabled]="doctorForm.invalid">
                   {{ isEdit ? "Update" : "Submit" }}
                 </button>
-                <button type="button" class="btn btn-secondary" (click)="resetForm()" *ngIf="isEdit">
-                  Cancel
+
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">
+                  {{ isEdit ? "Cancel" : "Reset" }}
                 </button>
               </div>
 
@@ -145,7 +175,8 @@
     <div class="row">
       <div class="col-lg-12 mb-3">
         <div class="card text-dark mb-3 h-100">
-          <div class="card-header bg-info fw-bold d-flex justify-content-between align-items-center">
+          <div class="card-header fw-bold d-flex justify-content-between align-items-center text-white"
+            style="background-color: #0085ff;">
             <span>Doctor Records</span>
 
             <!-- Page Size -->
@@ -166,7 +197,8 @@
             <!-- Search -->
             <div class="input-group my-3">
               <input type="text" class="form-control" placeholder="Search Doctor" aria-label="Search" />
-              <button class="btn btn-info" type="button"><i class="bi bi-search"></i></button>
+              <button class="btn btn-info" type="button" style="background-color: #0085ff;"><i
+                  class="bi bi-search"></i></button>
             </div>
 
             <!-- Spinner -->
@@ -194,7 +226,7 @@
 
               <tbody>
                 <tr *ngFor="let d of doctors">
-                 <!-- <td>{{ d | json }}</td>-->
+                  <!-- <td>{{ d | json }}</td>-->
                   <td>{{ d.id }}</td>
                   <td>{{ d.doctorName }}</td>
                   <td>{{ d.contactDetails }}</td>

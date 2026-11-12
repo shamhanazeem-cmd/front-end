@@ -12,8 +12,7 @@ import { PaymentService } from '../services/api/payment/payment.service';
 
 export class InvoiceComponent implements OnInit {
   invoiceForm!: FormGroup;
-  invoices: any[] = [];
-
+  invoices: any[]=[];
   isEdit: boolean = false;
   editingInvoiceId: number | null = null;
   isLoadingInvoices: boolean = false;
@@ -158,9 +157,10 @@ export class InvoiceComponent implements OnInit {
     const formData = this.invoiceForm.value;
 
     if (this.isEdit && this.editingInvoiceId !== null) {
+      const updatedData = { ...formData, id: this.editingInvoiceId }
 
       this.invoiceService
-        .createInvoice(this.editingInvoiceId, formData)
+        .createInvoice(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadInvoices();
@@ -187,10 +187,10 @@ export class InvoiceComponent implements OnInit {
     this.invoiceService.getInvoiceById(id).subscribe({
       next: (response) => {
 
-        const invoice = response.data;
+       const invoice = response.data.dataList[0];
 
         this.invoiceForm.patchValue({
-          id: invoice.id,
+          id:invoice.id,
           invoiceNumber: invoice.invoiceNumber,
           issuedDate: invoice.issuedDate,
           totalAmount: invoice.totalAmount,

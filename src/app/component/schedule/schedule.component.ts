@@ -140,8 +140,9 @@ export class ScheduleComponent implements OnInit {
 
     if (this.isEdit && this.editingScheduleId !== null) {
 
+      const updatedData={...formData, id:this.editingScheduleId}
       this.scheduleService
-        .createSchedule(this.editingScheduleId, formData)
+        .createSchedule(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadSchedules();
@@ -166,7 +167,7 @@ export class ScheduleComponent implements OnInit {
   getScheduleById(id: number) {
     this.scheduleService.getScheduleById(id).subscribe({
       next: (response) => {
-        const schedule = response.data;
+        const schedule = response.data.dataList[0];
 
         this.scheduleForm.patchValue({
           id: schedule.id,
