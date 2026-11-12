@@ -15,6 +15,7 @@ import { StatusService } from '../services/api/status/status.service';
 export class AppointmentComponent implements OnInit {
   appointmentForm!: FormGroup;
   appointments: any[] = [];
+
   isEdit: boolean = false;
   editingAppointmentId: number | null = null;
   isLoadingAppointments: boolean = false;
@@ -31,6 +32,7 @@ export class AppointmentComponent implements OnInit {
   totalElements: number = 0;
   hasNext: boolean = false;
   hasPrevious: boolean = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -71,6 +73,10 @@ export class AppointmentComponent implements OnInit {
   // Form getter
   get f() {
     return this.appointmentForm.controls;
+  }
+
+  doctorChange(e:any){
+    console.log("doctorObj",e)
   }
 
   // Load doctor
@@ -195,9 +201,9 @@ export class AppointmentComponent implements OnInit {
     const formData = this.appointmentForm.value;
 
     if (this.isEdit && this.editingAppointmentId !== null) {
+      const updatedData = { ...formData, id: this.editingAppointmentId };
 
-      this.appointmentService
-        .createAppointment(this.editingAppointmentId, formData)
+      this.appointmentService.createAppointment(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadAppointments();
@@ -219,20 +225,24 @@ export class AppointmentComponent implements OnInit {
   }
   getAppointmentById(id: string) {
     this.appointmentService.getAppointmentById(id).subscribe({
-      next: (appointment) => {
+      next: (response) => {
+        console.log('Getid:', response);
+        const appointment = response.data.dataList[0];
+        console.log(' datalistappointment',appointment)
+
         this.appointmentForm.patchValue({
-          id: appointment.data.id,
-          appointmentDate: appointment.data.appointmentDate,
-          appointmentTime: appointment.data.appointmentTime,
-          createdBy: appointment.data.createdBy,
-          createdDate: appointment.data.createdDate,
-          modifyBy: appointment.data.modifyBy,
-          modifyDate: appointment.data.modifyDate,
+          id: appointment.id,
+          appointmentDate:appointment.appointmentDate,
+          appointmentTime: appointment.appointmentTime,
+          createdBy: appointment.createdBy,
+          createdDate:appointment.createdDate,
+          modifyBy: appointment.modifyBy,
+          modifyDate:appointment.modifyDate,
 
           doctorAppointment: appointment.doctor?.id || appointment.doctorAppointment?.id,
-          patient: appointment.data.patient?.id,
-          schedule: appointment.data.schedule?.id,
-          status: appointment.data.status?.id
+          patient: appointment.patient?.id,
+          schedule: appointment.schedule?.id,
+          status: appointment.status?.id
         });
 
         this.isEdit = true;

@@ -13,6 +13,7 @@ export class MedicationComponent implements OnInit {
 
   medicationForm!: FormGroup;
   medications: any[] = [];
+  medication:any;
   isEdit: boolean = false;
   editingMedicationId: number | null = null;
   isLoadingMedication: boolean = false;
@@ -146,9 +147,10 @@ export class MedicationComponent implements OnInit {
     const formData = this.medicationForm.value;
 
     if (this.isEdit && this.editingMedicationId !== null) {
+      const updatedData={...formData, id:this.editingMedicationId}
 
       this.medicationService
-        .createMedication(this.editingMedicationId, formData)
+        .createMedication(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadMedications();
@@ -173,24 +175,24 @@ export class MedicationComponent implements OnInit {
   getMedicationById(id: number) {
     this.medicationService.GetMedicationById(id).subscribe({
       next: (response) => {
-        const m = response.data;
+        this.medication= response.data.dataList[0];
 
         this.medicationForm.patchValue({
-          id: m.id,
-          drugName: m.drugName,
-          dosage: m.dosage,
-          duration: m.duration,
-          instructions: m.instructions,
-          createdBy: m.createdBy,
-          createdDate: m.createdDate,
-          modifyBy: m.modifyBy,
-          modifyDate: m.modifyDate,
-          status: m.status?.id,
-          prescription: m.prescription?.id
+          id: this.medication.id,
+          drugName: this.medication.drugName,
+          dosage: this.medication.dosage,
+          duration: this.medication.duration,
+          instructions: this.medication.instructions,
+          createdBy: this.medication.createdBy,
+          createdDate: this.medication.createdDate,
+          modifyBy: this.medication.modifyBy,
+          modifyDate: this.medication.modifyDate,
+          status: this.medication.status?.id,
+          prescription: this.medication.prescription?.id
         });
 
         this.isEdit = true;
-        this.editingMedicationId = m.id;
+        this.editingMedicationId = this.medication.id;
       },
       error: (error) => console.error('Error loading medication:', error)
     });

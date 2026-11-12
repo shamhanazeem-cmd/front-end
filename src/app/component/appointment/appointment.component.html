@@ -12,142 +12,176 @@
         <div class="row">
             <div class="col-lg-12 mb-3">
                 <div class="card text-dark mb-3 h-100">
-                    <div class="card-header bg-info fw-bold">Appointment Form</div>
+                    <div class="card-header text-white fw-bold" style="background-color: #0085ff;">
+                        <i class="bi bi-person-lines-fill me-2"></i> Appointment Form
+                    </div>
                     <div class="card-body">
 
                         <form [formGroup]="appointmentForm" (ngSubmit)="saveAppointment()">
 
                             <!-- Appointment Date -->
-                            <div class="form-group">
-                                <label class="form-label">Appointment Date <span class="text-danger">*</span></label>
-                                <input type="date" formControlName="appointmentDate" class="form-control mt-2"
-                                    [ngClass]="{ 'is-invalid':appointmentForm.get('appointmentDate')?.touched && appointmentForm.get('appointmentDate')?.invalid }" />
+                            <form [formGroup]="appointmentForm" (ngSubmit)="saveAppointment()">
 
-                                <div class="invalid-feedback"
-                                    *ngIf="appointmentForm.get('appointmentDate')?.touched && appointmentForm.get('appointmentDate')?.errors?.['required']">
-                                    Appointment Date is required.
+                                <!-- Row 1 -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-2">
+                                            <label class="form-label">Appointment Date <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="date" formControlName="appointmentDate"
+                                                class="form-control mt-2"
+                                                [ngClass]="{'is-invalid': appointmentForm.get('appointmentDate')?.touched && appointmentForm.get('appointmentDate')?.invalid}" />
+
+                                            <div class="invalid-feedback"
+                                                *ngIf="appointmentForm.get('appointmentDate')?.touched && appointmentForm.get('appointmentDate')?.errors?.['required']">
+                                                Appointment Date is required.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-2">
+                                            <label class="form-label">Appointment Time <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="time" formControlName="appointmentTime"
+                                                class="form-control mt-2"
+                                                [ngClass]="{'is-invalid': appointmentForm.get('appointmentTime')?.touched && appointmentForm.get('appointmentTime')?.invalid}" />
+
+                                            <div class="invalid-feedback"
+                                                *ngIf="appointmentForm.get('appointmentTime')?.touched && appointmentForm.get('appointmentTime')?.errors?.['required']">
+                                                Appointment Time is required.
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Appointment Time -->
-                            <div class="form-group mt-3">
-                                <label class="form-label">Appointment Time <span class="text-danger">*</span></label>
-                                <input type="time" formControlName="appointmentTime" class="form-control mt-2"
-                                    [ngClass]="{ 'is-invalid': appointmentForm.get('appointmentTime')?.touched && appointmentForm.get('appointmentTime')?.invalid }" />
+                                <!-- Row 2 -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label class="form-label">Doctor <span class="text-danger">*</span></label>
 
-                                <div class="invalid-feedback"
-                                    *ngIf="appointmentForm.get('appointmentTime')?.touched && appointmentForm.get('appointmentTime')?.errors?.['required']">
-                                    Appointment Time is required.
+                                            <ng-select (change)="doctorChange($event)"
+                                            formControlName="doctorAppointment" [items]="allDoctors"
+                                                bindLabel="doctorName" bindValue="id" placeholder="Select Doctor"
+                                                [clearable]="false"
+                                                [ngClass]="{'is-invalid': appointmentForm.get('doctorAppointment')?.touched && appointmentForm.get('doctorAppointment')?.invalid}">
+                                            </ng-select>
+
+                                            <div class="invalid-feedback"
+                                                *ngIf="appointmentForm.get('doctorAppointment')?.touched && appointmentForm.get('doctorAppointment')?.errors?.['required']">
+                                                Doctor is required.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label class="form-label">Patient <span class="text-danger">*</span></label>
+
+                                            <ng-select formControlName="patient" [items]="allPatients"
+                                                bindLabel="fullName" bindValue="id" placeholder="Select Patient"
+                                                [clearable]="false"
+                                                [ngClass]="{'is-invalid': appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.invalid}">
+                                            </ng-select>
+
+                                            <div class="invalid-feedback"
+                                                *ngIf="appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.errors?.['required']">
+                                                Patient is required.
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Doctor -->
-                            <div class="form-group mt-3">
-                                <label class="form-label">Doctor <span class="text-danger">*</span></label>
+                                <!-- Row 3 -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label class="form-label">Schedule <span
+                                                    class="text-danger">*</span></label>
 
-                                <ng-select formControlName="doctorAppointment" [items]="allDoctors"
-                                    bindLabel="doctorName" bindValue="id" placeholder="Select Doctor"
-                                    [clearable]="false"
-                                    [ngClass]="{ 'is-invalid': appointmentForm.get('doctorAppointment')?.touched && appointmentForm.get('doctorAppointment')?.invalid }">
-                                </ng-select>
+                                            <ng-select formControlName="schedule" [items]="allSchedules"
+                                                bindLabel="dayOfWeek" bindValue="id" placeholder="Select Schedule"
+                                                [clearable]="false"
+                                                [ngClass]="{'is-invalid': appointmentForm.get('schedule')?.touched && appointmentForm.get('schedule')?.invalid}">
+                                            </ng-select>
 
-                                <div class="invalid-feedback"
-                                    *ngIf="appointmentForm.get('doctorAppointment')?.touched && appointmentForm.get('doctorAppointment')?.errors?.['required']">
-                                    Doctor is required.
+                                            <div class="invalid-feedback"
+                                                *ngIf="appointmentForm.get('schedule')?.touched && appointmentForm.get('schedule')?.errors?.['required']">
+                                                Schedule is required.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label class="form-label">Status <span class="text-danger">*</span></label>
+
+                                            <ng-select formControlName="status" [items]="allStatuses" bindLabel="name"
+                                                bindValue="id" placeholder="Select Status" [clearable]="false"
+                                                [ngClass]="{'is-invalid': appointmentForm.get('status')?.touched && appointmentForm.get('status')?.invalid}">
+                                            </ng-select>
+
+                                            <div class="invalid-feedback"
+                                                *ngIf="appointmentForm.get('status')?.touched && appointmentForm.get('status')?.errors?.['required']">
+                                                Status is required.
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
+                                <!-- Row 4 -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label for="createdBy" class="form-label">Created By</label>
+                                            <input type="text" id="createdBy" formControlName="createdBy"
+                                                class="form-control mt-2" placeholder="Enter Creator">
+                                        </div>
+                                    </div>
 
-                            <!-- Patient -->
-                            <div class="form-group mt-3">
-                                <label class="form-label">Patient <span class="text-danger">*</span></label>
-
-                                <ng-select formControlName="patient" [items]="allPatients" bindLabel="fullName"
-                                    bindValue="id" placeholder="Select Patient" [clearable]="false"
-                                    [ngClass]="{ 'is-invalid': appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.invalid }">
-                                </ng-select>
-
-                                <div class="invalid-feedback"
-                                    *ngIf="appointmentForm.get('patient')?.touched && appointmentForm.get('patient')?.errors?.['required']">
-                                    Patient is required.
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label for="createdDate" class="form-label">Created Date</label>
+                                            <input type="date" id="createdDate" formControlName="createdDate"
+                                                class="form-control mt-2">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
+                                <!-- Row 5 -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label for="modifyBy" class="form-label">Modified By</label>
+                                            <input type="text" id="modifyBy" formControlName="modifyBy"
+                                                class="form-control mt-2" placeholder="Enter Modifier">
+                                        </div>
+                                    </div>
 
-                            <!--Schedule-->
-                            <div class="form-group mt-3">
-                                <label class="form-label">Schedule <span class="text-danger">*</span></label>
-
-                                <ng-select formControlName="schedule" [items]="allSchedules" bindLabel="dayOfWeek"
-                                    bindValue="id" placeholder="Select Schedule" [clearable]="false"
-                                    [ngClass]="{'is-invalid': appointmentForm.get('schedule')?.touched && appointmentForm.get('schedule')?.invalid }">
-                                </ng-select>
-
-                                <div class="invalid-feedback"
-                                    *ngIf="appointmentForm.get('schedule')?.touched && appointmentForm.get('schedule')?.errors?.['required']">
-                                    Schedule is required.
+                                    <div class="col-md-6">
+                                        <div class="form-group mt-3">
+                                            <label for="modifyDate" class="form-label">Modified Date</label>
+                                            <input type="date" id="modifyDate" formControlName="modifyDate"
+                                                class="form-control mt-2">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
+                                <!-- Buttons -->
+                                <div class="text-end mt-4">
+                                    <button type="submit" class="btn btn-primary me-2"
+                                        [disabled]="appointmentForm.invalid">
+                                        {{ isEdit ? 'Update' : 'Submit' }}
+                                    </button>
 
-                            <!--status-->
-                            <div class="form-group mt-3">
-                                <label class="form-label">Status <span class="text-danger">*</span></label>
-
-                                <ng-select formControlName="status" [items]="allStatuses" bindLabel="name"
-                                    bindValue="id" placeholder="Select Status" [clearable]="false"
-                                    [ngClass]="{'is-invalid': appointmentForm.get('status')?.touched && appointmentForm.get('status')?.invalid }">
-
-                                </ng-select>
-
-
-                                <div class="invalid-feedback"
-                                    *ngIf="appointmentForm.get('status')?.touched && appointmentForm.get('status')?.errors?.['required']">
-                                    Status is required.
+                                    <button type="button" class="btn btn-secondary" *ngIf="isEdit"
+                                        (click)="resetForm()">
+                                        Cancel
+                                    </button>
                                 </div>
-                            </div>
 
-
-                            <!-- Created By -->
-                            <div class="form-group mt-3">
-                                <label for="createdBy" class="form-label">Created By</label>
-                                <input type="text" id="createdBy" formControlName="createdBy" class="form-control mt-2"
-                                    placeholder="Enter Creator">
-                            </div>
-
-                            <!-- Created Date -->
-                            <div class="form-group mt-3">
-                                <label for="createdDate" class="form-label">Created Date</label>
-                                <input type="date" id="createdDate" formControlName="createdDate"
-                                    class="form-control mt-2">
-                            </div>
-
-                            <!-- Modified By -->
-                            <div class="form-group mt-3">
-                                <label for="modifyBy" class="form-label">Modified By</label>
-                                <input type="text" id="modifyBy" formControlName="modifyBy" class="form-control mt-2"
-                                    placeholder="Enter Modifier">
-                            </div>
-
-                            <!-- Modified Date -->
-                            <div class="form-group mt-3">
-                                <label for="modifyDate" class="form-label">Modified Date</label>
-                                <input type="date" id="modifyDate" formControlName="modifyDate"
-                                    class="form-control mt-2">
-                            </div>
-
-
-                            <!-- Buttons -->
-                            <div class="form-group mt-4 text-end">
-                                <button type="submit" class="btn btn-primary me-2" [disabled]="appointmentForm.invalid">
-                                    {{ isEdit ? 'Update' : 'Submit' }}
-
-                                </button>
-
-                                <button type="button" class="btn btn-secondary" *ngIf="isEdit" (click)="resetForm()">
-                                    Cancel
-                                </button>
-                            </div>
+                            </form>
 
                         </form>
 
@@ -159,8 +193,9 @@
         <div class="row">
             <div class="col-lg-12 mb-3">
                 <div class="card text-dark mb-3 h-100">
-                    <div class="card-header bg-info fw-bold d-flex justify-content-between align-items-center">
-                        <span>Appointment Records</span>
+                    <div class="card-header fw-bold d-flex justify-content-between align-items-center text-white"
+                        style="background-color: #0085ff;">
+                         <span>Appointment Records</span>
 
                         <!-- Page Size -->
                         <div class="d-flex align-items-center">
@@ -203,7 +238,7 @@
                             </thead>
 
                             <tbody>
-                                <tr *ngFor="let a of appointments">
+                                <tr *ngFor="let a of appointments.slice().reverse()">
                                     <!--<td>{{ a | json }}</td>-->
                                     <td>{{ a.id }}</td>
                                     <td>{{ a.appointmentDate }}</td>

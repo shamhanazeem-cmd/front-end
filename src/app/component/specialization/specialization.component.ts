@@ -73,8 +73,9 @@ export class SpecializationComponent implements OnInit {
 
     if (this.isEdit && this.editingSpecializationId !== null) {
 
+      const updatedData = { ...formData, id: this.editingSpecializationId }
       this.specializationService
-        .createSpecialization(this.editingSpecializationId, formData)
+        .createSpecialization(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadSpecializations();
@@ -97,8 +98,9 @@ export class SpecializationComponent implements OnInit {
 
   GetSpecializationById(id: string) {
     this.specializationService.getSpecializationById(id).subscribe({
-      next: (specialization) => {
-        // Populate form with specialization data for editing
+      next: (response) => {
+        const specialization = response.data.dataList[0];
+
         this.specializationForm.patchValue({
           id: specialization.data.id,
           name: specialization.data.name,

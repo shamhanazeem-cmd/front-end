@@ -21,6 +21,8 @@ import { MedicationComponent } from './component/medication/medication.component
 import { PaymentComponent } from './component/payment/payment.component';
 import { ReportPatientComponent } from './component/reports/report-patient/report-patient.component';
 import { InvoiceComponent } from './component/invoice/invoice.component';
+import { RfqComponent } from './component/rfq/rfq.component';
+import { ReportAppointmentComponent } from './component/reports/report-appointment/report-appointment/report-appointment.component';
 
 const routes: Routes = [
 
@@ -52,6 +54,8 @@ const routes: Routes = [
 
   { path: 'course', component: CourseComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
+  { path: 'rfq', component: RfqComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
   { path: 'teacher', component: TeacherComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   { path: 'class', component: ClassComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
@@ -63,6 +67,9 @@ const routes: Routes = [
   { path: 'privilege', component: PrivilegeComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
 
   { path: 'patientReport', component: ReportPatientComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
+
+  { path: 'appointmentReport', component: ReportAppointmentComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'user'] } },
+
 ];
 
 @NgModule({

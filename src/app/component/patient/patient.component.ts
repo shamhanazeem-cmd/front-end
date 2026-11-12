@@ -158,8 +158,9 @@ export class PatientComponent implements OnInit {
 
     if (this.isEditPatient && this.editingPatientId !== null) {
 
+      const updatedData = { ...formData, id: this.editingPatientId };
       this.patientService
-        .createPatient(this.editingPatientId, formData)
+        .createPatient(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadPatients();
@@ -183,22 +184,22 @@ export class PatientComponent implements OnInit {
 
   GetPatientById(id: string) {
     this.patientService.getPatientsById(id).subscribe({
-      next: (patient) => {
-        // Populate form with patient data for editing
+      next: (response) => {
+       const patient= response.data.dataList[0];
         this.patientForm.patchValue({
-          id: patient.data.id,
-          fullName: patient.data.fullName,
-          nic: patient.data.nic,
-          dob: patient.data.dob,
-          gender: patient.data.gender,
-          address: patient.data.address,
-          contactNo: patient.data.contactNo,
-          email: patient.data.email,
-          patientMedicalHistory: patient.data.medicalHistory?.id,
-          createdBy: patient.data.createdBy,
-          createdDate: patient.data.createdDate,
-          modifyBy: patient.data.modifyBy,
-          modifyDate: patient.data.modifyDate
+          id: patient.id,
+          fullName:patient.fullName,
+          nic:patient.nic,
+          dob:patient.dob,
+          gender:patient.gender,
+          address: patient.address,
+          contactNo: patient.contactNo,
+          email: patient.email,
+          patientMedicalHistory:patient.medicalHistory?.id,
+          createdBy:patient.createdBy,
+          createdDate:patient.createdDate,
+          modifyBy: patient.modifyBy,
+          modifyDate:patient.modifyDate
         });
         this.isEditPatient = true;
         this.editingPatientId = id;

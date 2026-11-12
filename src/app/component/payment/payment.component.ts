@@ -13,6 +13,7 @@ export class PaymentComponent implements OnInit {
 
   paymentForm!: FormGroup;
   payments: any[] = [];
+  payment:any;
   isEditPayment: boolean = false;
   editingPaymentId: number | null = null;
   isLoadingPayment: boolean = false;
@@ -147,12 +148,13 @@ export class PaymentComponent implements OnInit {
       return;
     }
 
-    const formdata = this.paymentForm.value;
+    const formData = this.paymentForm.value;
 
     if (this.isEditPayment && this.editingPaymentId !== null) {
 
+      const updatedData = { ...formData, id: this.editingPaymentId };
       this.paymentService
-        .createPayment(this.editingPaymentId, formdata)
+        .createPayment(updatedData, 'Edit')
         .subscribe({
           next: () => {
             this.loadPayments();
@@ -162,7 +164,7 @@ export class PaymentComponent implements OnInit {
         });
     } else {
       this.paymentService
-        .createPayment(formdata, 'Add')
+        .createPayment(formData, 'Add')
         .subscribe({
           next: () => {
             this.loadPayments();
@@ -176,7 +178,7 @@ export class PaymentComponent implements OnInit {
   getPaymentById(id: number) {
     this.paymentService.getPaymentById(id).subscribe({
       next: (res) => {
-        const pay = res.data;
+        const pay = res.data.dataList[0];
 
         this.paymentForm.patchValue({
           id: pay.id,
